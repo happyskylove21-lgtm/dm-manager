@@ -210,16 +210,16 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="card-label">① 先方の情報</div>
       <div class="input-group">
         <div class="input-group-label">📨 送信先</div>
-        <div class="field"><label>会社名・施設名</label><input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()"><div class="field-error" id="err-company">入力してください</div></div>
-        <div class="field"><label>先方のサービス・商品</label><input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()"><div class="field-error" id="err-service">入力してください</div></div>
-        <div class="field"><label>○○サービス（詳細）</label><input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()"><div class="field-error" id="err-service-detail">入力してください</div></div>
-        <div class="field"><label>集客したい季節 or ターゲット層</label><input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()"><div class="field-error" id="err-target">入力してください</div></div>
+        <div class="field"><label>[先方の会社or施設]</label><input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()"><div class="field-error" id="err-company">入力してください</div></div>
+        <div class="field"><label>[先方が売りにしているサービスやモノ]</label><input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()"><div class="field-error" id="err-service">入力してください</div></div>
+        <div class="field"><label>[○○サービス]</label><input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()"><div class="field-error" id="err-service-detail">入力してください</div></div>
+        <div class="field"><label>[集客したい季節] or [ターゲット層の年代]</label><input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()"><div class="field-error" id="err-target">入力してください</div></div>
       </div>
       <div class="input-group2">
         <div class="input-group2-label">🏢 自社情報</div>
-        <div class="field"><label>株式会社名</label><input type="text" id="tpl-mycompany" placeholder="例: 〇〇マーケティング" oninput="updatePreview()"><div class="field-error" id="err-mycompany">入力してください</div></div>
-        <div class="field"><label>代表者名</label><input type="text" id="tpl-myname" placeholder="例: 山田 太郎" oninput="updatePreview()"><div class="field-error" id="err-myname">入力してください</div></div>
-        <div class="field"><label>メール担当者名</label><input type="text" id="tpl-sender" placeholder="例: 田中 花子" oninput="updatePreview()"><div class="field-error" id="err-sender">入力してください</div></div>
+        <div class="field"><label>株式会社○○（自社名）</label><input type="text" id="tpl-mycompany" placeholder="例: 〇〇マーケティング" oninput="updatePreview()"><div class="field-error" id="err-mycompany">入力してください</div></div>
+        <div class="field"><label>代表の○○（代表者名）</label><input type="text" id="tpl-myname" placeholder="例: 山田 太郎" oninput="updatePreview()"><div class="field-error" id="err-myname">入力してください</div></div>
+        <div class="field"><label>[メールの担当者名]</label><input type="text" id="tpl-sender" placeholder="例: 田中 花子" oninput="updatePreview()"><div class="field-error" id="err-sender">入力してください</div></div>
       </div>
     </div>
     <div class="card">
@@ -368,16 +368,16 @@ let searchTimer = null;
 // ── テンプレート ──
 function buildTemplate() {
   return `{会社名}　広報　ご担当者様
-
+ 
 急なご連絡失礼いたします。
 株式会社{自社名}代表の{代表者名}と申します。
 現在、インフルエンサーを活用した広告事業を展開しております。
 今後、貴社のような{先方サービス}とご連携ができないかお伺いさせていただきたく場をもうけられないかと思いご連絡いたしました。
-
-
+ 
+ 
 【ご相談事項】
 ・貴社 {サービス詳細}のご担当者の方、または広報など社外窓口をご担当の方とお打ち合わせの時間を30分程度いただけないでしょうか。
-
+ 
 【ご相談背景】
 ・貴社のような施設と今後、広告宣伝の連携の可能性があるのかご相談させていただきたいです。
 ・{ターゲット}に人気のあるインフルエンサーを活用した広告宣伝のご支援をさせていただきたいです。
@@ -386,40 +386,40 @@ function buildTemplate() {
 ・貴社のインスタグラムのフォロワー増加及び知名度アップに繋がります
 ・集客が足りていない時期でも、インフルエンサーに宣伝してもらうことで売り上げアップ繋がります
 ・SNS総フォロワー170万人のインフルエンサーを60万円からご活用いただけます。
-
-
+ 
+ 
 ご提案インフルエンサー
 白瀬あかり　SNS総フォロワー170万人
 instagram　18万人
 https://www.instagram.com/______shirase_akari/
-
+ 
 TikTok　約96万人
 https://www.tiktok.com/@shiraseakari12
-
+ 
 Youtube　47万人
 https://www.youtube.com/channel/UCYYHd8GZtFsVlnhmfzG-HEw
-
-
+ 
+ 
 ※（白瀬あかりの場合）他社だと、100万円~150万円のところ弊社だと60万円から活用できます。
 弊社と白瀬あかりで独自の友好関係があり
 他社の半額以下でご活用いただけます。
 　　通常TikTokのみのご依頼で、1投稿100万円程度のところを弊社の場合は60万円からご活用いただけます。
 　　また、ご希望の媒体や組み合わせに柔軟に対応が可能となっております。
-
+ 
 もしご興味がおありでしたら、一度オンラインにてお時間をいただければと思いますので
 メールに「興味あり」とご返信くださいませ。
-
+ 
 {担当者名}`;
 }
 
 const VARS = [
-  { key: '{会社名}', id: 'tpl-company', label: '会社名・施設名' },
-  { key: '{先方サービス}', id: 'tpl-service', label: '先方のサービス・商品' },
-  { key: '{サービス詳細}', id: 'tpl-service-detail', label: '○○サービス（詳細）' },
-  { key: '{ターゲット}', id: 'tpl-target', label: '集客したい季節 or ターゲット層' },
-  { key: '{自社名}', id: 'tpl-mycompany', label: '株式会社名' },
-  { key: '{代表者名}', id: 'tpl-myname', label: '代表者名' },
-  { key: '{担当者名}', id: 'tpl-sender', label: 'メール担当者名' },
+  { key: '{会社名}', id: 'tpl-company', label: '[先方の会社or施設]' },
+  { key: '{先方サービス}', id: 'tpl-service', label: '[先方が売りにしているサービスやモノ]' },
+  { key: '{サービス詳細}', id: 'tpl-service-detail', label: '[○○サービス]' },
+  { key: '{ターゲット}', id: 'tpl-target', label: '[集客したい季節ya] or [ターゲット層の年代]' },
+  { key: '{自社名}', id: 'tpl-mycompany', label: '株式会社○○（自社名）' },
+  { key: '{代表者名}', id: 'tpl-myname', label: '代表の○○（代表者名）' },
+  { key: '{担当者名}', id: 'tpl-sender', label: '[メールの担当者名]' },
 ];
 function getVal(id) { return document.getElementById(id)?.value.trim() || ''; }
 
