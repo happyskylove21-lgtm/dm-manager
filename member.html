@@ -143,22 +143,22 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="input-group">
         <div class="input-group-label">📨 送信先</div>
         <div class="field">
-          <label>[先方の会社or施設]</label>
+          <label for="tpl-company">[先方の会社or施設]</label>
           <input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()">
           <div class="field-error" id="err-company">入力してください</div>
         </div>
         <div class="field">
-          <label>[先方が売りにしているサービスやモノ]</label>
+          <label for="tpl-service">[先方が売りにしているサービスやモノ]</label>
           <input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()">
           <div class="field-error" id="err-service">入力してください</div>
         </div>
         <div class="field">
-          <label>[○○サービス]</label>
+          <label for="tpl-service-detail">[○○サービス]</label>
           <input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()">
           <div class="field-error" id="err-service-detail">入力してください</div>
         </div>
         <div class="field">
-          <label>[集客したい季節] or [ターゲット層の年代]</label>
+          <label for="tpl-target">[集客したい季節] or [ターゲット層の年代]</label>
           <input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()">
           <div class="field-error" id="err-target">入力してください</div>
         </div>
@@ -184,7 +184,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     </div>
     <div class="card">
       <div class="field">
-        <label>Instagram ID（@なし）</label>
+        <label for="check-id">Instagram ID（@なし）</label>
         <input type="text" id="check-id" placeholder="例: sato_bakery_tokyo"
           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
           oninput="liveCheck()">
@@ -206,7 +206,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
       <div class="search-wrap" style="margin-bottom:0; flex:1;">
         <span class="search-icon">🔍</span>
-        <input type="search" id="search" placeholder="IDで検索" oninput="debounceSearch()">
+        <label for="search" style="display:none;">検索</label><input type="search" id="search" placeholder="IDで検索" oninput="debounceSearch()">
       </div>
       <button class="refresh-btn" onclick="loadList()">↻ 更新</button>
     </div>
