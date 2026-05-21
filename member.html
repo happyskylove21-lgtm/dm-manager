@@ -384,11 +384,13 @@ async function sendToDiscord() {
   btn.textContent = '送信中...';
   btn.disabled = true;
   try {
-    await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'deliverTemplate', company: getVal('tpl-company'), text: copiedText, date: getToday() })
-    });
+    const formData = new FormData();
+    formData.append('payload', JSON.stringify({ action: 'deliverTemplate', company: getVal('tpl-company'), text: copiedText, date: getToday() }));
+    try {
+      await fetch(GAS_URL, { method: 'POST', body: formData, redirect: 'follow' });
+    } catch(e) {
+      await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'deliverTemplate', company: getVal('tpl-company'), text: copiedText, date: getToday() }), mode: 'no-cors' });
+    }
     btn.textContent = '✅ 送信しました！';
     btn.style.background = '#16A34A';
     setTimeout(() => { btn.textContent = '📣 Discordに納品する'; btn.style.background = ''; btn.disabled = false; }, 3000);
@@ -401,10 +403,22 @@ async function sendToDiscord() {
 // ── GAS通信 ──
 async function callGas(payload) {
   try {
-    const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
+    const formData = new FormData();
+    formData.append('payload', JSON.stringify(payload));
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      body: formData,
+      redirect: 'follow'
+    });
     const json = await res.json();
     return { ok: true, data: json };
-  } catch(e) { return { ok: false, msg: e.message, data: null }; }
+  } catch(e) {
+    // フォールバック: no-corsで送信のみ（レスポンスなし）
+    try {
+      await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(payload), mode: 'no-cors' });
+    } catch(e2) {}
+    return { ok: false, msg: e.message, data: null };
+  }
 }
 
 // ── 自社情報をGASから取得 ──
