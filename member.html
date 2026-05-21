@@ -52,9 +52,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
   background: var(--bg); color: var(--text); outline: none; appearance: none; -webkit-appearance: none;
 }
 .field input:focus, .field select:focus { border-color: var(--accent-a); background: var(--surface); }
-.field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A09E98' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
-.field-row { display: flex; gap: 10px; }
-.field-row .field { flex: 1; }
 .field-error { font-size: 12px; color: var(--danger); margin-top: 5px; display: none; }
 .field-error.show { display: block; }
 
@@ -73,16 +70,11 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; font-family: var(--mono); }
 .b-a { background: var(--accent-a-bg); color: var(--accent-a-text); }
 .b-b { background: var(--accent-b-bg); color: var(--accent-b-text); }
-.b-dm { background: var(--purple-bg); color: var(--purple); }
-.b-rep { background: var(--warned-bg); color: var(--warned); }
-.b-ng { background: var(--danger-bg); color: var(--danger); }
 
 .list-item { display: flex; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 10px; }
 .list-item:last-child { border-bottom: none; }
 .list-main { flex: 1; min-width: 0; }
 .list-id { font-family: var(--mono); font-size: 14px; font-weight: 500; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.list-meta { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.list-sub { font-size: 12px; color: var(--text3); }
 .list-date { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 4px; }
 
 .search-wrap { position: relative; margin-bottom: 12px; }
@@ -128,13 +120,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .input-group .field label { color: var(--accent-a-text); }
 .input-group .field input { background: var(--surface); border-color: rgba(37,99,235,0.2); }
 
-.input-group2 { background: var(--success-bg); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 12px; }
-.input-group2-label { font-size: 11px; font-weight: 700; color: var(--accent-b-text); letter-spacing: 0.06em; margin-bottom: 10px; }
-.input-group2 .field { margin-bottom: 10px; }
-.input-group2 .field:last-child { margin-bottom: 0; }
-.input-group2 .field label { color: var(--accent-b-text); }
-.input-group2 .field input { background: var(--surface); border-color: rgba(22,163,74,0.2); }
-
 .empty { text-align: center; padding: 48px 0; color: var(--text3); font-size: 14px; }
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border2); border-top-color: var(--accent-a); border-radius: 50%; animation: spin 0.7s linear infinite; }
 .spinner-lg { width: 32px; height: 32px; border-width: 3px; }
@@ -157,22 +142,37 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="card-label">① 先方の情報を入力</div>
       <div class="input-group">
         <div class="input-group-label">📨 送信先</div>
-        <div class="field"><label>[先方の会社or施設]</label><input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()"><div class="field-error" id="err-company">入力してください</div></div>
-        <div class="field"><label>[先方が売りにしているサービスやモノ]</label><input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()"><div class="field-error" id="err-service">入力してください</div></div>
-        <div class="field"><label>[○○サービス]</label><input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()"><div class="field-error" id="err-service-detail">入力してください</div></div>
-        <div class="field"><label>[集客したい季節] or [ターゲット層の年代]</label><input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()"><div class="field-error" id="err-target">入力してください</div></div>
+        <div class="field">
+          <label>[先方の会社or施設]</label>
+          <input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()">
+          <div class="field-error" id="err-company">入力してください</div>
+        </div>
+        <div class="field">
+          <label>[先方が売りにしているサービスやモノ]</label>
+          <input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()">
+          <div class="field-error" id="err-service">入力してください</div>
+        </div>
+        <div class="field">
+          <label>[○○サービス]</label>
+          <input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()">
+          <div class="field-error" id="err-service-detail">入力してください</div>
+        </div>
+        <div class="field">
+          <label>[集客したい季節] or [ターゲット層の年代]</label>
+          <input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()">
+          <div class="field-error" id="err-target">入力してください</div>
+        </div>
       </div>
-
     </div>
     <div class="card">
       <div class="card-label">② プレビュー確認</div>
-      <div class="tpl-preview" id="tpl-preview"></div>
+      <div class="tpl-preview" id="tpl-preview">読み込み中...</div>
       <div class="check-result" id="check-result">
         <div class="check-icon" id="check-icon"></div>
         <div class="check-text" id="check-text"></div>
       </div>
       <button class="btn btn-copy btn-mt" onclick="checkAndCopy()">📋 チェックしてコピー</button>
-      <button class="btn btn-discord btn-mt" id="discord-btn" onclick="sendToDiscord()" style="display:none;">📣 Discordに納品する</button>
+      <button class="btn btn-discord btn-mt" id="discord-btn" style="display:none;" onclick="sendToDiscord()">📣 Discordに納品する</button>
     </div>
   </div>
 
@@ -183,7 +183,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="sub">スプレッドシートをリアルタイム参照</div>
     </div>
     <div class="card">
-      <div class="field"><label>Instagram ID（@なし）</label>
+      <div class="field">
+        <label>Instagram ID（@なし）</label>
         <input type="text" id="check-id" placeholder="例: sato_bakery_tokyo"
           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
           oninput="liveCheck()">
@@ -205,7 +206,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
       <div class="search-wrap" style="margin-bottom:0; flex:1;">
         <span class="search-icon">🔍</span>
-        <input type="search" id="search" placeholder="ID・担当者・業種で検索" oninput="debounceSearch()">
+        <input type="search" id="search" placeholder="IDで検索" oninput="debounceSearch()">
       </div>
       <button class="refresh-btn" onclick="loadList()">↻ 更新</button>
     </div>
@@ -213,9 +214,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <button class="chip on" onclick="setFilter('all',this)">すべて</button>
       <button class="chip" onclick="setFilter('A',this)">Acct A</button>
       <button class="chip" onclick="setFilter('B',this)">Acct B</button>
-      <button class="chip" onclick="setFilter('DM済',this)">DM済</button>
-      <button class="chip" onclick="setFilter('返信あり',this)">返信あり</button>
-      <button class="chip" onclick="setFilter('NG',this)">NG</button>
     </div>
     <div class="card" style="padding: 0 16px;">
       <div id="list-body"></div>
@@ -233,14 +231,17 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 </nav>
 
 <script>
+// ── 設定 ──
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzPBGe70H7JRPflxcsOA1r0iLGRFePljhPg8Z4t773xj34WnVLF9lbJwMj4wAjFIUbObg/exec';
+
+// ── 状態 ──
+let selfInfo = { myCompany: '', myRep: '' };
+let copiedText = '';
 let currentFilter = 'all';
 let checkTimer = null;
 let searchTimer = null;
-let copiedText = '';
 
-// ── テンプレート（短縮版）──
-// 前半テンプレート（メンバーが入力する部分）
+// ── テンプレート前半（メンバーが入力する部分）──
 function buildTemplateFront() {
   return `{会社名}　広報　ご担当者様
 
@@ -263,7 +264,7 @@ function buildTemplateFront() {
 ・SNS総フォロワー170万人のインフルエンサーを60万円からご活用いただけます。`;
 }
 
-// 後半テンプレート（固定・自動でくっつける）
+// ── テンプレート後半（固定）──
 function buildTemplateBack() {
   return `
 
@@ -287,103 +288,110 @@ https://www.youtube.com/channel/UCYYHd8GZtFsVlnhmfzG-HEw
 　　また、ご希望の媒体や組み合わせに柔軟に対応が可能となっております。
  
 もしご興味がおありでしたら、一度オンラインにてお時間をいただければと思いますので
-メールに「興味あり」とご返信くださいませ。
- 
-{担当者名}`;
+メールに「興味あり」とご返信くださいませ。`;
 }
 
-// メンバーが入力する変数
+// ── 入力変数 ──
 const VARS = [
-  { key: '{会社名}',      id: 'tpl-company',       label: '[先方の会社or施設]' },
-  { key: '{先方サービス}', id: 'tpl-service',        label: '[先方が売りにしているサービスやモノ]' },
-  { key: '{サービス詳細}', id: 'tpl-service-detail', label: '[○○サービス]' },
-  { key: '{ターゲット}',  id: 'tpl-target',         label: '[集客したい季節] or [ターゲット層の年代]' },
+  { key: '{会社名}',      id: 'tpl-company',       errId: 'err-company',        label: '[先方の会社or施設]' },
+  { key: '{先方サービス}', id: 'tpl-service',        errId: 'err-service',        label: '[先方が売りにしているサービスやモノ]' },
+  { key: '{サービス詳細}', id: 'tpl-service-detail', errId: 'err-service-detail', label: '[○○サービス]' },
+  { key: '{ターゲット}',  id: 'tpl-target',         errId: 'err-target',         label: '[集客したい季節] or [ターゲット層の年代]' },
 ];
 
-// GASから取得する自社情報
-let selfInfo = { myCompany: '', myRep: '' };
+function getVal(id) { return (document.getElementById(id)?.value || '').trim(); }
 
-function getVal(id) { return document.getElementById(id)?.value.trim() || ''; }
-
+// ── 全文生成（コピー・Discord送信用）──
 function buildFullText() {
   let front = buildTemplateFront();
   let back = buildTemplateBack();
   VARS.forEach(v => { front = front.split(v.key).join(getVal(v.id)); });
-  front = front.split('{自社名}').join(selfInfo.myCompany || '');
-  front = front.split('{代表者名}').join(selfInfo.myRep || '');
-  back = back.split('{自社名}').join(selfInfo.myCompany || '');
-  back = back.split('{代表者名}').join(selfInfo.myRep || '');
-  back = back.split('{担当者名}').join('');
+  front = front.split('{自社名}').join(selfInfo.myCompany);
+  front = front.split('{代表者名}').join(selfInfo.myRep);
+  back = back.split('{自社名}').join(selfInfo.myCompany);
+  back = back.split('{代表者名}').join(selfInfo.myRep);
   return front + back;
 }
 
+// ── プレビュー更新 ──
 function updatePreview() {
   document.getElementById('check-result').classList.remove('show');
   document.getElementById('discord-btn').style.display = 'none';
-  let tpl = buildTemplate();
-  VARS.forEach(v => { const val = getVal(v.id); if (val) tpl = tpl.split(v.key).join('\x01' + val + '\x01'); });
+
+  let tpl = buildTemplateFront();
+  VARS.forEach(v => {
+    const val = getVal(v.id);
+    if (val) tpl = tpl.split(v.key).join('\x01' + val + '\x01');
+  });
+  if (selfInfo.myCompany) tpl = tpl.split('{自社名}').join('\x01' + selfInfo.myCompany + '\x01');
+  if (selfInfo.myRep) tpl = tpl.split('{代表者名}').join('\x01' + selfInfo.myRep + '\x01');
+
   const escaped = tpl.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   let html = escaped;
-  VARS.forEach(v => { html = html.replace(new RegExp(v.key.replace(/[{}]/g,'\\$&'), 'g'), `<span class="tpl-var-empty">${v.key}</span>`); });
+  VARS.forEach(v => {
+    html = html.replace(new RegExp(v.key.replace(/[{}]/g,'\\$&'), 'g'), `<span class="tpl-var-empty">${v.key}</span>`);
+  });
+  html = html.replace(/\{自社名\}/g, '<span class="tpl-var-empty">{自社名}</span>');
+  html = html.replace(/\{代表者名\}/g, '<span class="tpl-var-empty">{代表者名}</span>');
   html = html.replace(/\x01([^\x01]+)\x01/g, '<span class="tpl-var-filled">$1</span>');
   document.getElementById('tpl-preview').innerHTML = html;
 }
 
+// ── チェック＆コピー ──
 function checkAndCopy() {
   const resEl = document.getElementById('check-result');
   const iconEl = document.getElementById('check-icon');
   const textEl = document.getElementById('check-text');
   const discordBtn = document.getElementById('discord-btn');
+
   let missing = [];
   VARS.forEach(v => {
-    const errId = 'err-' + v.id.replace('tpl-','');
-    if (!getVal(v.id)) { document.getElementById(errId)?.classList.add('show'); missing.push(v.label); }
-    else document.getElementById(errId)?.classList.remove('show');
+    if (!getVal(v.id)) { document.getElementById(v.errId)?.classList.add('show'); missing.push(v.label); }
+    else document.getElementById(v.errId)?.classList.remove('show');
   });
+
   resEl.classList.remove('ok','ng'); resEl.classList.add('show');
   discordBtn.style.display = 'none';
+
   if (missing.length > 0) {
-    resEl.classList.add('ng'); iconEl.textContent = '⚠️';
+    resEl.classList.add('ng');
+    iconEl.textContent = '⚠️';
     textEl.textContent = `未入力: ${missing.join('・')}`;
     return;
   }
-  copiedText = buildFullText();
+
+  const fullText = buildFullText();
+  copiedText = fullText;
+
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      resEl.classList.add('ok'); iconEl.textContent = '✅';
+    navigator.clipboard.writeText(fullText).then(() => {
+      resEl.classList.add('ok');
+      iconEl.textContent = '✅';
       textEl.textContent = 'コピーしました！DMに貼り付けてください';
       discordBtn.style.display = 'flex';
     });
   } else {
-    resEl.classList.add('ok'); iconEl.textContent = '✅';
+    resEl.classList.add('ok');
+    iconEl.textContent = '✅';
     textEl.textContent = 'プレビューのテキストをコピーしてください';
     discordBtn.style.display = 'flex';
   }
 }
 
+// ── Discord納品 ──
 async function sendToDiscord() {
   const btn = document.getElementById('discord-btn');
   btn.textContent = '送信中...';
   btn.disabled = true;
-  const company = getVal('tpl-company');
   try {
-    const res = await fetch(GAS_URL, {
+    await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        action: 'deliverTemplate',
-        company,
-        text: copiedText,
-        date: getToday()
-      })
+      body: JSON.stringify({ action: 'deliverTemplate', company: getVal('tpl-company'), text: copiedText, date: getToday() })
     });
-    btn.textContent = '📣 Discordに送信しました！';
+    btn.textContent = '✅ 送信しました！';
     btn.style.background = '#16A34A';
-    setTimeout(() => {
-      btn.textContent = '📣 Discordに納品する';
-      btn.style.background = '';
-      btn.disabled = false;
-    }, 3000);
+    setTimeout(() => { btn.textContent = '📣 Discordに納品する'; btn.style.background = ''; btn.disabled = false; }, 3000);
   } catch(e) {
     btn.textContent = '送信失敗 - 再試行';
     btn.disabled = false;
@@ -399,6 +407,16 @@ async function callGas(payload) {
   } catch(e) { return { ok: false, msg: e.message, data: null }; }
 }
 
+// ── 自社情報をGASから取得 ──
+async function fetchSelfInfo() {
+  const r = await callGas({ action: 'getSelfInfo' });
+  if (r.ok && r.data?.status === 'ok') {
+    selfInfo.myCompany = r.data.myCompany || '';
+    selfInfo.myRep = r.data.myRep || '';
+  }
+  updatePreview();
+}
+
 // ── 重複チェック ──
 function liveCheck() {
   const id = document.getElementById('check-id').value.trim().replace(/^@/,'');
@@ -411,11 +429,18 @@ function liveCheck() {
   clearTimeout(checkTimer);
   checkTimer = setTimeout(() => doCheck(id), 600);
 }
+
 async function doCheck(id) {
   const el = document.getElementById('dup-result');
   const r = await callGas({ action: 'check', id });
   el.classList.remove('checking');
-  if (!r.ok) { el.className = 'dup-result show ng'; document.getElementById('dup-icon').textContent = '❌'; document.getElementById('dup-text').textContent = '通信エラー'; document.getElementById('dup-sub').textContent = r.msg; return; }
+  if (!r.ok) {
+    el.className = 'dup-result show ng';
+    document.getElementById('dup-icon').textContent = '❌';
+    document.getElementById('dup-text').textContent = '通信エラー';
+    document.getElementById('dup-sub').textContent = r.msg;
+    return;
+  }
   if (r.data?.duplicate) {
     el.className = 'dup-result show ng';
     document.getElementById('dup-icon').textContent = '❌';
@@ -436,7 +461,12 @@ function setFilter(f, btn) {
   btn.classList.add('on');
   loadList();
 }
-function debounceSearch() { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadList(), 500); }
+
+function debounceSearch() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => loadList(), 500);
+}
+
 async function loadList() {
   const body = document.getElementById('list-body');
   const empty = document.getElementById('list-empty');
@@ -445,50 +475,22 @@ async function loadList() {
   body.innerHTML = ''; empty.style.display = 'none'; loading.style.display = 'block';
   const r = await callGas({ action: 'list', filter: currentFilter, search });
   loading.style.display = 'none';
-  if (!r.ok || !r.data) { empty.textContent = '取得失敗: ' + r.msg; empty.style.display = 'block'; return; }
+  if (!r.ok || !r.data) { empty.textContent = '取得失敗'; empty.style.display = 'block'; return; }
   const rows = r.data.rows || [];
   document.getElementById('list-sub').textContent = `全員共通 · ${rows.length}件`;
   if (!rows.length) { empty.textContent = 'データがありません'; empty.style.display = 'block'; return; }
-  const sb = s => { const m = {'DM済':'b-dm','返信あり':'b-rep','NG':'b-ng'}; return `<span class="badge ${m[s]||''}">${s}</span>`; };
   const ab = a => `<span class="badge b-${a.toLowerCase()}">Acct ${a}</span>`;
   body.innerHTML = rows.map(r =>
     `<div class="list-item">
       <div class="list-main">
         <div class="list-id">@${r.id}</div>
-        <div class="list-date" style="margin-top:4px;">${ab(r.acct)} · ${r.date}</div>
+        <div class="list-date">${ab(r.acct)} · ${r.date}</div>
       </div>
     </div>`
   ).join('');
 }
 
 // ── ページ遷移 ──
-function saveSelfInfo() {
-  const mycompany = document.getElementById('set-mycompany').value.trim();
-  const myname = document.getElementById('set-myname').value.trim();
-  const sender = document.getElementById('set-sender').value.trim();
-  localStorage.setItem('member_mycompany', mycompany);
-  localStorage.setItem('member_myname', myname);
-  localStorage.setItem('member_sender', sender);
-  const okEl = document.getElementById('alert-self');
-  okEl.textContent = '✓ 保存しました！テンプレに自動で入ります';
-  okEl.classList.add('show');
-  setTimeout(() => okEl.classList.remove('show'), 2500);
-  fetchSelfInfo();
-updatePreview();
-}
-
-function loadSelfInfo() {
-  const fields = [
-    { id: 'set-mycompany', key: 'member_mycompany' },
-    { id: 'set-myname',    key: 'member_myname' },
-    { id: 'set-sender',    key: 'member_sender' },
-  ];
-  fields.forEach(f => {
-    const el = document.getElementById(f.id);
-    if (el) el.value = localStorage.getItem(f.key) || '';
-  });
-}
-
 function goPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -502,8 +504,8 @@ function getToday() {
   return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
+// ── 初期化 ──
 fetchSelfInfo();
-updatePreview();
 </script>
 </body>
 </html>
