@@ -220,6 +220,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
         <div class="field"><label>株式会社○○（自社名）</label><input type="text" id="tpl-mycompany" placeholder="例: 〇〇マーケティング" oninput="updatePreview()"><div class="field-error" id="err-mycompany">入力してください</div></div>
         <div class="field"><label>代表の○○（代表者名）</label><input type="text" id="tpl-myname" placeholder="例: 山田 太郎" oninput="updatePreview()"><div class="field-error" id="err-myname">入力してください</div></div>
         <div class="field"><label>[メールの担当者名]</label><input type="text" id="tpl-sender" placeholder="例: 田中 花子" oninput="updatePreview()"><div class="field-error" id="err-sender">入力してください</div></div>
+
       </div>
     </div>
     <div class="card">
@@ -360,6 +361,9 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 <script>
 const GAS_KEY = 'dm_mgr_gas';
 const MEMBERS_KEY = 'dm_mgr_members';
+
+// Discord Webhook URLs（直接送信）
+const DISCORD_ADMIN_WEBHOOK = 'https://discord.com/api/webhooks/1503766562509815818/iGy44qsNoilSkollF68HIO1aAL9ZmiC2Vow03PqeuRpuxdDJ56nm-ngUswgnaHvTZ8NQ';
 const DEFAULT_MEMBERS = ['担当者1', '担当者2', '担当者3', '担当者4'];
 let currentFilter = 'all';
 let checkTimer = null;
@@ -596,16 +600,43 @@ async function sendReport() {
   const okEl = document.getElementById('alert-rep');
   const errEl = document.getElementById('alert-rep-err');
   okEl.classList.remove('show'); errEl.classList.remove('show');
-  if (!getGasUrl()) { errEl.textContent = '設定画面でGAS URLを設定してください'; errEl.classList.add('show'); return; }
   if (cntA + cntB === 0) { errEl.textContent = '送信数を入力してください'; errEl.classList.add('show'); return; }
-  const r = await callGas({ action: 'report', person, cntA, cntB, replied, ng, memo, date: getToday() });
-  if (r.ok) {
-    okEl.textContent = `📣 ${person} の報告を送りました（合計 ${cntA+cntB} 通）`; okEl.classList.add('show');
+
+  const total = cntA + cntB;
+  const discordBody = {
+    embeds: [{
+      title: '📊 本日の稼働報告',
+      color: 10181046,
+      fields: [
+        { name: '担当者', value: person, inline: true },
+        { name: 'アカウントA', value: `${cntA}通`, inline: true },
+        { name: 'アカウントB', value: `${cntB}通`, inline: true },
+        { name: '合計送信数', value: `**${total}通**`, inline: true },
+        { name: '返信あり', value: `${replied}件`, inline: true },
+        { name: 'NG', value: `${ng}件`, inline: true },
+        { name: 'メモ', value: memo || 'なし', inline: false },
+      ],
+      footer: { text: getToday() + ' 送信' }
+    }]
+  };
+
+  try {
+    await fetch(DISCORD_ADMIN_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(discordBody)
+    });
+    okEl.textContent = `📣 ${person} の報告を送りました（合計 ${total} 通）`; okEl.classList.add('show');
     ['rep-a','rep-b','rep-replied','rep-ng'].forEach(id => document.getElementById(id).value = 0);
     document.getElementById('rep-memo').value = '';
     document.getElementById('rep-total').textContent = '0';
     setTimeout(() => okEl.classList.remove('show'), 4000);
-  } else { errEl.textContent = '送信失敗: ' + r.msg; errEl.classList.add('show'); }
+
+    // GASにも記録（スプレッドシート用・失敗してもOK）
+    if (getGasUrl()) callGas({ action: 'report', person, cntA, cntB, replied, ng, memo, date: getToday() });
+  } catch(e) {
+    errEl.textContent = '送信失敗: ' + e.message; errEl.classList.add('show');
+  }
 }
 
 // ── リスト（GASから取得）──
