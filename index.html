@@ -577,12 +577,41 @@ async function registerFromCheck() {
   const r = await callGas({ action: 'register', id, acct, person, status, genre, date });
   if (!r.ok) { errEl.textContent = '通信エラー: ' + r.msg; errEl.classList.add('show'); return; }
   if (r.data?.status === 'duplicate') { errEl.textContent = `⚠️ @${id} はすでに登録済みです`; errEl.classList.add('show'); return; }
+
+  // Discordに直接通知
+  const acctColor = acct === 'A' ? 3447003 : 3066993;
+  const statusEmoji = { 'DM済': '📨', '返信あり': '💬', 'NG': '❌' };
+  fetch(DISCORD_ADMIN_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ embeds: [{ title: `${statusEmoji[status]||'📋'} 営業先を登録しました`, color: acctColor, fields: [
+      { name: 'Instagram ID', value: '`@' + id + '`', inline: true },
+      { name: 'アカウント', value: 'アカウント' + acct, inline: true },
+      { name: '担当者', value: person, inline: true },
+      { name: 'ステータス', value: status, inline: true },
+      { name: '業種', value: genre || '未入力', inline: true },
+    ], footer: { text: date } }] })
+  }).catch(() => {});
+
   okEl.textContent = `✓ @${id} をスプレッドシートに登録しました`; okEl.classList.add('show');
   document.getElementById('check-id').value = '';
   document.getElementById('reg-genre').value = '';
   document.getElementById('dup-result').classList.remove('show');
   setTimeout(() => okEl.classList.remove('show'), 3000);
 }
+完了
+GitHubの index.html を直接編集する手順です。
+
+GitHubのリポジトリで index.html を開く
+鉛筆✏️アイコンをクリック
+Ctrl+F で async function registerFromCheck() を検索
+その関数全体を上のコードに丸ごと差し替える
+「Commit changes」
+これで登録時にもDiscordに通知が届くようになります！
+
+
+
+
 
 // ── 報告 ──
 function updateRepTotal() {
