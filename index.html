@@ -103,7 +103,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .search-wrap input { width: 100%; font-size: 16px; font-family: var(--sans); padding: 12px 14px 12px 42px; border: 1px solid var(--border2); border-radius: var(--r-sm); background: var(--surface); color: var(--text); outline: none; }
 .search-wrap input:focus { border-color: var(--accent-a); }
 .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 18px; pointer-events: none; }
-
 .filter-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; scrollbar-width: none; }
 .filter-bar::-webkit-scrollbar { display: none; }
 .chip { flex-shrink: 0; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); white-space: nowrap; }
@@ -154,6 +153,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border2); border-top-color: var(--accent-a); border-radius: 50%; animation: spin 0.7s linear infinite; }
 .spinner-lg { width: 32px; height: 32px; border-width: 3px; }
 @keyframes spin { to { transform: rotate(360deg); } }
+.list-loading { text-align: center; padding: 40px 0; }
+.refresh-btn { font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); }
 
 .input-group { background: var(--accent-a-bg); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 12px; }
 .input-group-label { font-size: 11px; font-weight: 700; color: var(--accent-a-text); letter-spacing: 0.06em; margin-bottom: 10px; }
@@ -168,10 +169,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .input-group2 .field:last-child { margin-bottom: 0; }
 .input-group2 .field label { color: var(--accent-b-text); }
 .input-group2 .field input { background: var(--surface); border-color: rgba(22,163,74,0.2); }
-
-.list-loading { text-align: center; padding: 40px 0; }
-.refresh-btn { font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); }
-.refresh-btn:active { background: var(--surface2); }
 </style>
 </head>
 <body>
@@ -193,7 +190,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div class="card" style="background:var(--surface2); border:none;">
       <div style="font-size:13px; color:var(--text2); line-height:2.1;">
         <div>📝 テンプレ → DM文を作成してコピー</div>
-        <div>🔍 チェック → 重複をリアルタイム確認</div>
+        <div>🔍 チェック → 重複をリアルタイム確認・登録</div>
         <div>📣 報告 → 送信完了をDiscordに共有</div>
         <div>📋 リスト → 全員共通の営業先一覧</div>
       </div>
@@ -210,17 +207,16 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="card-label">① 先方の情報</div>
       <div class="input-group">
         <div class="input-group-label">📨 送信先</div>
-        <div class="field"><label>[先方の会社or施設]</label><input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()"><div class="field-error" id="err-company">入力してください</div></div>
-        <div class="field"><label>[先方が売りにしているサービスやモノ]</label><input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()"><div class="field-error" id="err-service">入力してください</div></div>
-        <div class="field"><label>[○○サービス]</label><input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()"><div class="field-error" id="err-service-detail">入力してください</div></div>
-        <div class="field"><label>[集客したい季節] or [ターゲット層の年代]</label><input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()"><div class="field-error" id="err-target">入力してください</div></div>
+        <div class="field"><label for="tpl-company">[先方の会社or施設]</label><input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()"><div class="field-error" id="err-company">入力してください</div></div>
+        <div class="field"><label for="tpl-service">[先方が売りにしているサービスやモノ]</label><input type="text" id="tpl-service" placeholder="例: 高級スパ・温浴施設" oninput="updatePreview()"><div class="field-error" id="err-service">入力してください</div></div>
+        <div class="field"><label for="tpl-service-detail">[○○サービス]</label><input type="text" id="tpl-service-detail" placeholder="例: スパ・温浴サービス" oninput="updatePreview()"><div class="field-error" id="err-service-detail">入力してください</div></div>
+        <div class="field"><label for="tpl-target">[集客したい季節] or [ターゲット層の年代]</label><input type="text" id="tpl-target" placeholder="例: 夏 / 20〜30代女性" oninput="updatePreview()"><div class="field-error" id="err-target">入力してください</div></div>
       </div>
       <div class="input-group2">
         <div class="input-group2-label">🏢 自社情報</div>
-        <div class="field"><label>株式会社○○（自社名）</label><input type="text" id="tpl-mycompany" placeholder="例: 〇〇マーケティング" oninput="updatePreview()"><div class="field-error" id="err-mycompany">入力してください</div></div>
-        <div class="field"><label>代表の○○（代表者名）</label><input type="text" id="tpl-myname" placeholder="例: 山田 太郎" oninput="updatePreview()"><div class="field-error" id="err-myname">入力してください</div></div>
-        <div class="field"><label>[メールの担当者名]</label><input type="text" id="tpl-sender" placeholder="例: 田中 花子" oninput="updatePreview()"><div class="field-error" id="err-sender">入力してください</div></div>
-
+        <div class="field"><label for="tpl-mycompany">株式会社○○（自社名）</label><input type="text" id="tpl-mycompany" placeholder="例: 〇〇マーケティング" oninput="updatePreview()"><div class="field-error" id="err-mycompany">入力してください</div></div>
+        <div class="field"><label for="tpl-myname">代表の○○（代表者名）</label><input type="text" id="tpl-myname" placeholder="例: 山田 太郎" oninput="updatePreview()"><div class="field-error" id="err-myname">入力してください</div></div>
+        <div class="field"><label for="tpl-sender">[メールの担当者名]</label><input type="text" id="tpl-sender" placeholder="例: 田中 花子" oninput="updatePreview()"><div class="field-error" id="err-sender">入力してください</div></div>
       </div>
     </div>
     <div class="card">
@@ -241,7 +237,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="sub">スプレッドシートをリアルタイム参照</div>
     </div>
     <div class="card">
-      <div class="field"><label>Instagram ID（@なし）</label>
+      <div class="field"><label for="check-id">Instagram ID（@なし）</label>
         <input type="text" id="check-id" placeholder="例: sato_bakery_tokyo" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="liveCheck()">
       </div>
       <div class="dup-result" id="dup-result">
@@ -301,16 +297,13 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 
   <!-- リスト -->
   <div class="page" id="page-list">
-    <div class="page-header">
-      <h2>営業先リスト</h2>
-      <div class="sub" id="list-sub">全員共通・スプレッドシートから取得</div>
-    </div>
+    <div class="page-header"><h2>営業先リスト</h2><div class="sub" id="list-sub">全員共通・スプレッドシートから取得</div></div>
     <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
       <div class="search-wrap" style="margin-bottom:0; flex:1;">
         <span class="search-icon">🔍</span>
         <input type="search" id="search" placeholder="ID・担当者・業種で検索" oninput="debounceSearch()">
       </div>
-      <button class="refresh-btn" onclick="loadList(true)">↻ 更新</button>
+      <button class="refresh-btn" onclick="loadList()">↻ 更新</button>
     </div>
     <div class="filter-bar">
       <button class="chip on" onclick="setFilter('all',this)">すべて</button>
@@ -339,7 +332,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     </div>
     <div class="card">
       <div class="card-label">GAS接続</div>
-      <div class="field"><label>GAS URL</label><input type="url" id="gas-url" placeholder="https://script.google.com/..." oninput="saveGasUrl()" style="font-size:13px;"></div>
+      <div class="field"><label for="gas-url">GAS URL</label><input type="url" id="gas-url" placeholder="https://script.google.com/..." oninput="saveGasUrl()" style="font-size:13px;"></div>
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
         <span class="pill off" id="gas-pill">未接続</span>
         <button class="btn btn-primary" style="width:auto; padding:10px 20px; font-size:14px;" onclick="testConnection()">接続テスト</button>
@@ -359,12 +352,14 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 </nav>
 
 <script>
+// ── 定数 ──
 const GAS_KEY = 'dm_mgr_gas';
 const MEMBERS_KEY = 'dm_mgr_members';
-
-// Discord Webhook URLs（直接送信）
-const DISCORD_ADMIN_WEBHOOK = 'https://discord.com/api/webhooks/1503766562509815818/iGy44qsNoilSkollF68HIO1aAL9ZmiC2Vow03PqeuRpuxdDJ56nm-ngUswgnaHvTZ8NQ';
 const DEFAULT_MEMBERS = ['担当者1', '担当者2', '担当者3', '担当者4'];
+
+// Discord Webhook（直接送信）
+const DISCORD_ADMIN_WEBHOOK = 'https://discord.com/api/webhooks/1503766562509815818/iGy44qsNoilSkollF68HIO1aAL9ZmiC2Vow03PqeuRpuxdDJ56nm-ngUswgnaHvTZ8NQ';
+
 let currentFilter = 'all';
 let checkTimer = null;
 let searchTimer = null;
@@ -372,16 +367,16 @@ let searchTimer = null;
 // ── テンプレート ──
 function buildTemplate() {
   return `{会社名}　広報　ご担当者様
- 
+
 急なご連絡失礼いたします。
 株式会社{自社名}代表の{代表者名}と申します。
 現在、インフルエンサーを活用した広告事業を展開しております。
 今後、貴社のような{先方サービス}とご連携ができないかお伺いさせていただきたく場をもうけられないかと思いご連絡いたしました。
- 
- 
+
+
 【ご相談事項】
 ・貴社 {サービス詳細}のご担当者の方、または広報など社外窓口をご担当の方とお打ち合わせの時間を30分程度いただけないでしょうか。
- 
+
 【ご相談背景】
 ・貴社のような施設と今後、広告宣伝の連携の可能性があるのかご相談させていただきたいです。
 ・{ターゲット}に人気のあるインフルエンサーを活用した広告宣伝のご支援をさせていただきたいです。
@@ -390,8 +385,8 @@ function buildTemplate() {
 ・貴社のインスタグラムのフォロワー増加及び知名度アップに繋がります
 ・集客が足りていない時期でも、インフルエンサーに宣伝してもらうことで売り上げアップ繋がります
 ・SNS総フォロワー170万人のインフルエンサーを60万円からご活用いただけます。
- 
- 
+
+
 ご提案インフルエンサー
 白瀬あかり　SNS総フォロワー170万人
 instagram　18万人
@@ -417,15 +412,16 @@ https://www.youtube.com/channel/UCYYHd8GZtFsVlnhmfzG-HEw
 }
 
 const VARS = [
-  { key: '{会社名}', id: 'tpl-company', label: '[先方の会社or施設]' },
-  { key: '{先方サービス}', id: 'tpl-service', label: '[先方が売りにしているサービスやモノ]' },
-  { key: '{サービス詳細}', id: 'tpl-service-detail', label: '[○○サービス]' },
-  { key: '{ターゲット}', id: 'tpl-target', label: '[集客したい季節ya] or [ターゲット層の年代]' },
-  { key: '{自社名}', id: 'tpl-mycompany', label: '株式会社○○（自社名）' },
-  { key: '{代表者名}', id: 'tpl-myname', label: '代表の○○（代表者名）' },
-  { key: '{担当者名}', id: 'tpl-sender', label: '[メールの担当者名]' },
+  { key: '{会社名}',      id: 'tpl-company',       errId: 'err-company',        label: '[先方の会社or施設]' },
+  { key: '{先方サービス}', id: 'tpl-service',        errId: 'err-service',        label: '[先方が売りにしているサービスやモノ]' },
+  { key: '{サービス詳細}', id: 'tpl-service-detail', errId: 'err-service-detail', label: '[○○サービス]' },
+  { key: '{ターゲット}',  id: 'tpl-target',         errId: 'err-target',         label: '[集客したい季節] or [ターゲット層の年代]' },
+  { key: '{自社名}',      id: 'tpl-mycompany',      errId: 'err-mycompany',      label: '株式会社○○（自社名）' },
+  { key: '{代表者名}',    id: 'tpl-myname',         errId: 'err-myname',         label: '代表の○○（代表者名）' },
+  { key: '{担当者名}',    id: 'tpl-sender',         errId: 'err-sender',         label: '[メールの担当者名]' },
 ];
-function getVal(id) { return document.getElementById(id)?.value.trim() || ''; }
+
+function getVal(id) { return (document.getElementById(id)?.value || '').trim(); }
 
 function updatePreview() {
   document.getElementById('check-result').classList.remove('show');
@@ -444,9 +440,8 @@ function checkAndCopy() {
   const textEl = document.getElementById('check-text');
   let missing = [];
   VARS.forEach(v => {
-    const errId = 'err-' + v.id.replace('tpl-','');
-    if (!getVal(v.id)) { document.getElementById(errId)?.classList.add('show'); missing.push(v.label); }
-    else document.getElementById(errId)?.classList.remove('show');
+    if (!getVal(v.id)) { document.getElementById(v.errId)?.classList.add('show'); missing.push(v.label); }
+    else document.getElementById(v.errId)?.classList.remove('show');
   });
   resEl.classList.remove('ok','ng'); resEl.classList.add('show');
   if (missing.length > 0) { resEl.classList.add('ng'); iconEl.textContent = '⚠️'; textEl.textContent = `未入力: ${missing.join('・')}`; return; }
@@ -467,9 +462,9 @@ function updatePill() {
 }
 async function callGas(payload) {
   const url = getGasUrl();
-  if (!url) return { ok: false, msg: 'GAS URLが未設定です。設定画面で入力してください。', data: null };
+  if (!url) return { ok: false, msg: 'GAS URLが未設定です', data: null };
   try {
-    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload), redirect: 'follow' });
     const json = await res.json();
     return { ok: true, data: json };
   } catch(e) { return { ok: false, msg: e.message, data: null }; }
@@ -478,6 +473,17 @@ async function testConnection() {
   const r = await callGas({ action: 'ping' });
   if (r.ok) { updatePill(); alert('接続成功！'); }
   else alert('接続失敗: ' + r.msg);
+}
+
+// ── Discord直接送信 ──
+async function postToDiscord(body) {
+  try {
+    await fetch(DISCORD_ADMIN_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+  } catch(e) { console.log('Discord送信エラー:', e); }
 }
 
 // ── メンバー管理 ──
@@ -515,16 +521,15 @@ function updateAllSelects() {
   });
 }
 
-// ── 統計（GASから取得）──
+// ── 統計 ──
 async function loadStats() {
   const r = await callGas({ action: 'stats' });
   if (r.ok && r.data) {
-    const d = r.data;
-    document.getElementById('s-total').textContent = d.total ?? '—';
-    document.getElementById('s-a').textContent = d.a ?? '—';
-    document.getElementById('s-b').textContent = d.b ?? '—';
-    document.getElementById('s-r').textContent = d.replied ?? '—';
-    document.getElementById('s-ng').textContent = d.ng ?? '—';
+    document.getElementById('s-total').textContent = r.data.total ?? '—';
+    document.getElementById('s-a').textContent = r.data.a ?? '—';
+    document.getElementById('s-b').textContent = r.data.b ?? '—';
+    document.getElementById('s-r').textContent = r.data.replied ?? '—';
+    document.getElementById('s-ng').textContent = r.data.ng ?? '—';
   }
 }
 
@@ -544,24 +549,28 @@ function liveCheck() {
 }
 async function doCheck(id) {
   const el = document.getElementById('dup-result');
-  const iconEl = document.getElementById('dup-icon');
-  const textEl = document.getElementById('dup-text');
-  const subEl = document.getElementById('dup-sub');
   if (!getGasUrl()) {
     el.className = 'dup-result show ng';
-    iconEl.textContent = '⚙️'; textEl.textContent = 'GAS未接続'; subEl.textContent = '設定画面でURLを入力してください'; return;
+    document.getElementById('dup-icon').textContent = '⚙️';
+    document.getElementById('dup-text').textContent = 'GAS未接続';
+    document.getElementById('dup-sub').textContent = '設定画面でURLを入力してください'; return;
   }
   const r = await callGas({ action: 'check', id });
   el.classList.remove('checking');
-  if (!r.ok) { el.className = 'dup-result show ng'; iconEl.textContent = '❌'; textEl.textContent = '通信エラー'; subEl.textContent = r.msg; return; }
+  if (!r.ok) { el.className = 'dup-result show ng'; document.getElementById('dup-icon').textContent = '❌'; document.getElementById('dup-text').textContent = '通信エラー'; document.getElementById('dup-sub').textContent = r.msg; return; }
   if (r.data?.duplicate) {
-    el.className = 'dup-result show ng'; iconEl.textContent = '❌'; textEl.textContent = '送信済み・登録済みです';
-    subEl.textContent = `${r.data.acct} / ${r.data.person} / ${r.data.date}`;
+    el.className = 'dup-result show ng';
+    document.getElementById('dup-icon').textContent = '❌';
+    document.getElementById('dup-text').textContent = '送信済み・登録済みです';
+    document.getElementById('dup-sub').textContent = `${r.data.acct} / ${r.data.person} / ${r.data.date}`;
   } else {
-    el.className = 'dup-result show ok'; iconEl.textContent = '✅'; textEl.textContent = '未送信です';
-    subEl.textContent = '下のフォームからそのまま登録できます';
+    el.className = 'dup-result show ok';
+    document.getElementById('dup-icon').textContent = '✅';
+    document.getElementById('dup-text').textContent = '未送信です';
+    document.getElementById('dup-sub').textContent = '下のフォームからそのまま登録できます';
   }
 }
+
 async function registerFromCheck() {
   const id = document.getElementById('check-id').value.trim().replace(/^@/,'');
   const acct = document.getElementById('reg-acct').value;
@@ -581,17 +590,13 @@ async function registerFromCheck() {
   // Discordに直接通知
   const acctColor = acct === 'A' ? 3447003 : 3066993;
   const statusEmoji = { 'DM済': '📨', '返信あり': '💬', 'NG': '❌' };
-  fetch(DISCORD_ADMIN_WEBHOOK, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ embeds: [{ title: `${statusEmoji[status]||'📋'} 営業先を登録しました`, color: acctColor, fields: [
-      { name: 'Instagram ID', value: '`@' + id + '`', inline: true },
-      { name: 'アカウント', value: 'アカウント' + acct, inline: true },
-      { name: '担当者', value: person, inline: true },
-      { name: 'ステータス', value: status, inline: true },
-      { name: '業種', value: genre || '未入力', inline: true },
-    ], footer: { text: date } }] })
-  }).catch(() => {});
+  postToDiscord({ embeds: [{ title: `${statusEmoji[status]||'📋'} 営業先を登録しました`, color: acctColor, fields: [
+    { name: 'Instagram ID', value: '`@' + id + '`', inline: true },
+    { name: 'アカウント', value: 'アカウント' + acct, inline: true },
+    { name: '担当者', value: person, inline: true },
+    { name: 'ステータス', value: status, inline: true },
+    { name: '業種', value: genre || '未入力', inline: true },
+  ], footer: { text: date } }] });
 
   okEl.textContent = `✓ @${id} をスプレッドシートに登録しました`; okEl.classList.add('show');
   document.getElementById('check-id').value = '';
@@ -599,19 +604,6 @@ async function registerFromCheck() {
   document.getElementById('dup-result').classList.remove('show');
   setTimeout(() => okEl.classList.remove('show'), 3000);
 }
-完了
-GitHubの index.html を直接編集する手順です。
-
-GitHubのリポジトリで index.html を開く
-鉛筆✏️アイコンをクリック
-Ctrl+F で async function registerFromCheck() を検索
-その関数全体を上のコードに丸ごと差し替える
-「Commit changes」
-これで登録時にもDiscordに通知が届くようになります！
-
-
-
-
 
 // ── 報告 ──
 function updateRepTotal() {
@@ -619,6 +611,7 @@ function updateRepTotal() {
   const b = parseInt(document.getElementById('rep-b').value) || 0;
   document.getElementById('rep-total').textContent = a + b;
 }
+
 async function sendReport() {
   const person = document.getElementById('rep-person').value;
   const cntA = parseInt(document.getElementById('rep-a').value) || 0;
@@ -630,66 +623,40 @@ async function sendReport() {
   const errEl = document.getElementById('alert-rep-err');
   okEl.classList.remove('show'); errEl.classList.remove('show');
   if (cntA + cntB === 0) { errEl.textContent = '送信数を入力してください'; errEl.classList.add('show'); return; }
-
   const total = cntA + cntB;
-  const discordBody = {
-    embeds: [{
-      title: '📊 本日の稼働報告',
-      color: 10181046,
-      fields: [
-        { name: '担当者', value: person, inline: true },
-        { name: 'アカウントA', value: `${cntA}通`, inline: true },
-        { name: 'アカウントB', value: `${cntB}通`, inline: true },
-        { name: '合計送信数', value: `**${total}通**`, inline: true },
-        { name: '返信あり', value: `${replied}件`, inline: true },
-        { name: 'NG', value: `${ng}件`, inline: true },
-        { name: 'メモ', value: memo || 'なし', inline: false },
-      ],
-      footer: { text: getToday() + ' 送信' }
-    }]
-  };
-
   try {
-    await fetch(DISCORD_ADMIN_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(discordBody)
-    });
+    await postToDiscord({ embeds: [{ title: '📊 本日の稼働報告', color: 10181046, fields: [
+      { name: '担当者', value: person, inline: true },
+      { name: 'アカウントA', value: `${cntA}通`, inline: true },
+      { name: 'アカウントB', value: `${cntB}通`, inline: true },
+      { name: '合計送信数', value: `**${total}通**`, inline: true },
+      { name: '返信あり', value: `${replied}件`, inline: true },
+      { name: 'NG', value: `${ng}件`, inline: true },
+      { name: 'メモ', value: memo || 'なし', inline: false },
+    ], footer: { text: getToday() + ' 送信' } }] });
     okEl.textContent = `📣 ${person} の報告を送りました（合計 ${total} 通）`; okEl.classList.add('show');
     ['rep-a','rep-b','rep-replied','rep-ng'].forEach(id => document.getElementById(id).value = 0);
     document.getElementById('rep-memo').value = '';
     document.getElementById('rep-total').textContent = '0';
     setTimeout(() => okEl.classList.remove('show'), 4000);
-
-    // GASにも記録（スプレッドシート用・失敗してもOK）
-    if (getGasUrl()) callGas({ action: 'report', person, cntA, cntB, replied, ng, memo, date: getToday() });
-  } catch(e) {
-    errEl.textContent = '送信失敗: ' + e.message; errEl.classList.add('show');
-  }
+  } catch(e) { errEl.textContent = '送信失敗: ' + e.message; errEl.classList.add('show'); }
 }
 
-// ── リスト（GASから取得）──
+// ── リスト ──
 function setFilter(f, btn) {
   currentFilter = f;
   document.querySelectorAll('.chip').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   loadList();
 }
-function debounceSearch() {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => loadList(), 500);
-}
-async function loadList(showLoading = false) {
+function debounceSearch() { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadList(), 500); }
+async function loadList() {
   const body = document.getElementById('list-body');
   const empty = document.getElementById('list-empty');
   const loading = document.getElementById('list-loading');
   const search = document.getElementById('search').value.trim();
-  body.innerHTML = ''; empty.style.display = 'none';
-  loading.style.display = 'block';
-  if (!getGasUrl()) {
-    loading.style.display = 'none';
-    empty.textContent = '設定画面でGAS URLを入力してください'; empty.style.display = 'block'; return;
-  }
+  body.innerHTML = ''; empty.style.display = 'none'; loading.style.display = 'block';
+  if (!getGasUrl()) { loading.style.display = 'none'; empty.textContent = '設定画面でGAS URLを入力してください'; empty.style.display = 'block'; return; }
   const r = await callGas({ action: 'list', filter: currentFilter, search });
   loading.style.display = 'none';
   if (!r.ok || !r.data) { empty.textContent = '取得失敗: ' + r.msg; empty.style.display = 'block'; return; }
@@ -717,11 +684,10 @@ function goPage(name, btn) {
   document.getElementById('page-' + name).classList.add('active');
   btn.classList.add('active');
   if (name === 'list') loadList();
-  if (name === 'settings') renderMemberInputs();
+  if (name === 'settings') { renderMemberInputs(); document.getElementById('data-count') && (document.getElementById('data-count').textContent = ''); }
   if (name === 'home') loadStats();
 }
 
-// ── ユーティリティ ──
 function getToday() {
   const d = new Date();
   return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
