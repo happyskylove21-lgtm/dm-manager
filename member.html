@@ -219,6 +219,11 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="input-group">
         <div class="input-group-label">📨 送信先</div>
         <div class="field">
+          <label for="tpl-instagram">Instagram ID（@なし）</label>
+          <input type="text" id="tpl-instagram" placeholder="例: sato_bakery_tokyo" oninput="updatePreview()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <div class="field-error" id="err-instagram">入力してください</div>
+        </div>
+        <div class="field">
           <label for="tpl-company">[先方の会社or施設]</label>
           <input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()">
           <div class="field-error" id="err-company">入力してください</div>
@@ -471,6 +476,13 @@ function checkAndCopy() {
   }
 
   let missing = [];
+  // Instagram IDチェック
+  if (!getVal('tpl-instagram')) {
+    document.getElementById('err-instagram')?.classList.add('show');
+    missing.push('Instagram ID');
+  } else {
+    document.getElementById('err-instagram')?.classList.remove('show');
+  }
   VARS.forEach(v => {
     if (!getVal(v.id)) { document.getElementById(v.errId)?.classList.add('show'); missing.push(v.label); }
     else document.getElementById(v.errId)?.classList.remove('show');
@@ -517,12 +529,26 @@ async function sendToDiscord() {
       body: JSON.stringify({ content: copiedText })
     });
 
+    const instagramId = getVal('tpl-instagram');
+    const now = getToday();
+
     // GASに納品記録
     await callGas({
       action: 'deliver',
       nickname: nickname,
-      companyId: getVal('tpl-company'),
-      date: getToday()
+      companyId: instagramId || getVal('tpl-company'),
+      date: now
+    });
+
+    // GASに企業ID登録（重複チェック用）
+    await callGas({
+      action: 'register',
+      id: instagramId,
+      acct: 'A',
+      person: nickname,
+      status: '送信済み',
+      genre: getVal('tpl-service'),
+      date: now
     });
 
     btn.textContent = `✅ ${nickname} として納品しました！`;
