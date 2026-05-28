@@ -126,9 +126,74 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 @keyframes spin { to { transform: rotate(360deg); } }
 .list-loading { text-align: center; padding: 40px 0; }
 .refresh-btn { font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); }
+
+/* ── ニックネームバナー ── */
+.nickname-banner {
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563EB 100%);
+}
+.nickname-banner.unset {
+  background: linear-gradient(135deg, #92400e 0%, #D97706 100%);
+}
+.nn-icon { font-size: 26px; flex-shrink: 0; }
+.nn-body { flex: 1; min-width: 0; }
+.nn-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.65); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.nn-value { font-size: 17px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nn-value.placeholder { opacity: 0.65; font-size: 14px; }
+.nn-change-btn { font-size: 12px; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.18); border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-family: var(--sans); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.nn-change-btn:active { opacity: 0.7; }
+
+/* ── ニックネーム設定モーダル ── */
+.nn-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.nn-overlay.open { opacity: 1; pointer-events: all; }
+.nn-sheet {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px calc(24px + var(--safe-bottom));
+  width: 100%; max-width: 480px;
+  transform: translateY(24px);
+  transition: transform 0.25s ease;
+}
+.nn-overlay.open .nn-sheet { transform: translateY(0); }
+.nn-sheet-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.nn-sheet-sub { font-size: 13px; color: var(--text3); margin-bottom: 18px; line-height: 1.6; }
+.nn-sheet .field { margin-bottom: 16px; }
+.nn-sheet-btns { display: flex; gap: 8px; }
+.nn-sheet-btns button { flex: 1; font-family: var(--sans); font-size: 15px; font-weight: 700; padding: 14px; border-radius: var(--r-sm); border: none; cursor: pointer; }
+.nn-btn-cancel { background: var(--surface2); color: var(--text2); }
+.nn-btn-save { background: var(--text); color: #fff; }
 </style>
 </head>
 <body>
+
+<!-- ニックネーム設定モーダル -->
+<div class="nn-overlay" id="nn-overlay" onclick="handleOverlayClick(event)">
+  <div class="nn-sheet">
+    <div class="nn-sheet-title">👤 ニックネームを設定</div>
+    <div class="nn-sheet-sub">納品記録に使われます。一度設定するとこの端末では保存されます。</div>
+    <div class="field">
+      <label for="nn-input">ニックネーム（20文字以内）</label>
+      <input type="text" id="nn-input" placeholder="例: はるか" maxlength="20" autocomplete="off">
+      <div class="field-error" id="err-nn">ニックネームを入力してください</div>
+    </div>
+    <div class="nn-sheet-btns">
+      <button class="nn-btn-cancel" onclick="closeNnSheet()">キャンセル</button>
+      <button class="nn-btn-save" onclick="saveNickname()">保存する</button>
+    </div>
+  </div>
+</div>
 
 <div class="pages">
 
@@ -138,6 +203,17 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <h2>送信テンプレート</h2>
       <div class="sub">入力 → チェック → Discordに納品</div>
     </div>
+
+    <!-- ニックネームバナー -->
+    <div class="nickname-banner unset" id="nn-banner">
+      <div class="nn-icon">👤</div>
+      <div class="nn-body">
+        <div class="nn-label">あなたのニックネーム</div>
+        <div class="nn-value placeholder" id="nn-display">タップして設定してください</div>
+      </div>
+      <button class="nn-change-btn" onclick="openNnSheet()">設定</button>
+    </div>
+
     <div class="card">
       <div class="card-label">① 先方の情報を入力</div>
       <div class="input-group">
@@ -164,6 +240,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
         </div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-label">② プレビュー確認</div>
       <div class="tpl-preview" id="tpl-preview">読み込み中...</div>
@@ -206,7 +283,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
       <div class="search-wrap" style="margin-bottom:0; flex:1;">
         <span class="search-icon">🔍</span>
-        <label for="search" style="display:none;">検索</label><input type="search" id="search" placeholder="IDで検索" oninput="debounceSearch()">
+        <label for="search" style="display:none;">検索</label>
+        <input type="search" id="search" placeholder="IDで検索" oninput="debounceSearch()">
       </div>
       <button class="refresh-btn" onclick="loadList()">↻ 更新</button>
     </div>
@@ -233,6 +311,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 <script>
 // ── 設定 ──
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzPBGe70H7JRPflxcsOA1r0iLGRFePljhPg8Z4t773xj34WnVLF9lbJwMj4wAjFIUbObg/exec';
+const DISCORD_DELIVER_WEBHOOK = 'https://discord.com/api/webhooks/1506968636257075210/W3w4j2BM53jSQ2i_vnYJGpzai4b31zLWAdNaDzWFJuACnaYy8WFlkWUlp0iaTusDINX-';
 
 // ── 状態 ──
 let selfInfo = { myCompany: '', myRep: '' };
@@ -240,8 +319,54 @@ let copiedText = '';
 let currentFilter = 'all';
 let checkTimer = null;
 let searchTimer = null;
+let nickname = localStorage.getItem('dm_nickname') || '';
 
-// ── テンプレート前半（メンバーが入力する部分）──
+// ── ニックネーム ──
+function renderNickname() {
+  const banner = document.getElementById('nn-banner');
+  const display = document.getElementById('nn-display');
+  const btn = banner.querySelector('.nn-change-btn');
+  if (nickname) {
+    banner.classList.remove('unset');
+    display.classList.remove('placeholder');
+    display.textContent = nickname;
+    btn.textContent = '変更';
+  } else {
+    banner.classList.add('unset');
+    display.classList.add('placeholder');
+    display.textContent = 'タップして設定してください';
+    btn.textContent = '設定';
+  }
+}
+
+function openNnSheet() {
+  document.getElementById('nn-input').value = nickname;
+  document.getElementById('err-nn').classList.remove('show');
+  document.getElementById('nn-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('nn-input').focus(), 250);
+}
+
+function closeNnSheet() {
+  document.getElementById('nn-overlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('nn-overlay')) closeNnSheet();
+}
+
+function saveNickname() {
+  const val = document.getElementById('nn-input').value.trim();
+  if (!val) {
+    document.getElementById('err-nn').classList.add('show');
+    return;
+  }
+  nickname = val;
+  localStorage.setItem('dm_nickname', nickname);
+  renderNickname();
+  closeNnSheet();
+}
+
+// ── テンプレート ──
 function buildTemplateFront() {
   return `{会社名}　広報　ご担当者様
 
@@ -264,7 +389,6 @@ function buildTemplateFront() {
 ・SNS総フォロワー170万人のインフルエンサーを60万円からご活用いただけます。`;
 }
 
-// ── テンプレート後半（固定）──
 function buildTemplateBack() {
   return `
 
@@ -291,7 +415,6 @@ https://www.youtube.com/channel/UCYYHd8GZtFsVlnhmfzG-HEw
 メールに「興味あり」とご返信くださいませ。`;
 }
 
-// ── 入力変数 ──
 const VARS = [
   { key: '{会社名}',      id: 'tpl-company',       errId: 'err-company',        label: '[先方の会社or施設]' },
   { key: '{先方サービス}', id: 'tpl-service',        errId: 'err-service',        label: '[先方が売りにしているサービスやモノ]' },
@@ -301,7 +424,6 @@ const VARS = [
 
 function getVal(id) { return (document.getElementById(id)?.value || '').trim(); }
 
-// ── 全文生成（コピー・Discord送信用）──
 function buildFullText() {
   let front = buildTemplateFront();
   let back = buildTemplateBack();
@@ -313,7 +435,6 @@ function buildFullText() {
   return front + back;
 }
 
-// ── プレビュー更新 ──
 function updatePreview() {
   document.getElementById('check-result').classList.remove('show');
   document.getElementById('discord-btn').style.display = 'none';
@@ -337,12 +458,17 @@ function updatePreview() {
   document.getElementById('tpl-preview').innerHTML = html;
 }
 
-// ── チェック＆コピー ──
 function checkAndCopy() {
   const resEl = document.getElementById('check-result');
   const iconEl = document.getElementById('check-icon');
   const textEl = document.getElementById('check-text');
   const discordBtn = document.getElementById('discord-btn');
+
+  // ニックネーム未設定チェック
+  if (!nickname) {
+    openNnSheet();
+    return;
+  }
 
   let missing = [];
   VARS.forEach(v => {
@@ -367,7 +493,7 @@ function checkAndCopy() {
     navigator.clipboard.writeText(fullText).then(() => {
       resEl.classList.add('ok');
       iconEl.textContent = '✅';
-      textEl.textContent = 'コピーしました！DMに貼り付けてください';
+      textEl.textContent = `コピーしました！DMに貼り付けてください`;
       discordBtn.style.display = 'flex';
     });
   } else {
@@ -378,22 +504,34 @@ function checkAndCopy() {
   }
 }
 
-// ── Discord納品（直接Webhookに送信）──
-const DISCORD_DELIVER_WEBHOOK = 'https://discord.com/api/webhooks/1506968636257075210/W3w4j2BM53jSQ2i_vnYJGpzai4b31zLWAdNaDzWFJuACnaYy8WFlkWUlp0iaTusDINX-';
-
+// ── Discord納品 + GAS記録 ──
 async function sendToDiscord() {
   const btn = document.getElementById('discord-btn');
   btn.textContent = '送信中...';
   btn.disabled = true;
   try {
+    // Discord送信
     await fetch(DISCORD_DELIVER_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content: copiedText })
     });
-    btn.textContent = '✅ 送信しました！';
+
+    // GASに納品記録
+    await callGas({
+      action: 'deliver',
+      nickname: nickname,
+      companyId: getVal('tpl-company'),
+      date: getToday()
+    });
+
+    btn.textContent = `✅ ${nickname} として納品しました！`;
     btn.style.background = '#16A34A';
-    setTimeout(() => { btn.textContent = '📣 Discordに納品する'; btn.style.background = ''; btn.disabled = false; }, 3000);
+    setTimeout(() => {
+      btn.textContent = '📣 Discordに納品する';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 3000);
   } catch(e) {
     btn.textContent = '送信失敗 - 再試行';
     btn.disabled = false;
@@ -414,7 +552,7 @@ async function callGas(payload) {
   } catch(e) { return { ok: false, msg: e.message, data: null }; }
 }
 
-// ── 自社情報をGASから取得 ──
+// ── 自社情報取得 ──
 async function fetchSelfInfo() {
   const r = await callGas({ action: 'getSelfInfo' });
   if (r.ok && r.data?.status === 'ok') {
@@ -508,11 +646,13 @@ function goPage(name, btn) {
 
 function getToday() {
   const d = new Date();
-  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
 // ── 初期化 ──
+renderNickname();
 fetchSelfInfo();
+if (!nickname) setTimeout(() => openNnSheet(), 700);
 </script>
 </body>
 </html>
