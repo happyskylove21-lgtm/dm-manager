@@ -182,8 +182,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     </div>
     <div class="stats-grid">
       <div class="stat s-total"><div class="n" id="s-total">—</div><div class="l">総登録数</div></div>
-      <div class="stat s-a"><div class="n" id="s-a">—</div><div class="l">アカウントA</div></div>
-      <div class="stat s-b"><div class="n" id="s-b">—</div><div class="l">アカウントB</div></div>
+      <div class="stat s-a"><div class="n" id="s-a">—</div><div class="l">代表者アカウント</div></div>
+      <div class="stat s-b"><div class="n" id="s-b">—</div><div class="l">企業アカウント</div></div>
       <div class="stat s-r"><div class="n" id="s-r">—</div><div class="l">返信あり</div></div>
       <div class="stat s-ng"><div class="n" id="s-ng">—</div><div class="l">NG</div></div>
     </div>
@@ -249,7 +249,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div class="card">
       <div class="card-label">そのまま登録する</div>
       <div class="field-row">
-        <div class="field"><label>アカウント</label><select id="reg-acct"><option value="A">アカウントA</option><option value="B">アカウントB</option></select></div>
+        <div class="field"><label>アカウント</label><select id="reg-acct"><option value="A">代表者アカウント</option><option value="B">企業アカウント</option></select></div>
         <div class="field"><label>担当者</label><select id="reg-person"></select></div>
       </div>
       <div class="field-row">
@@ -272,9 +272,9 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="card-label">担当者・送信数</div>
       <div class="field"><label>担当者</label><select id="rep-person"></select></div>
       <div class="count-row">
-        <div class="count-field"><label>アカウントA</label><input type="number" id="rep-a" value="0" min="0" max="60" inputmode="numeric"></div>
+        <div class="count-field"><label>代表者アカウント</label><input type="number" id="rep-a" value="0" min="0" max="60" inputmode="numeric"></div>
         <div class="count-sep">+</div>
-        <div class="count-field"><label>アカウントB</label><input type="number" id="rep-b" value="0" min="0" max="60" inputmode="numeric"></div>
+        <div class="count-field"><label>企業アカウント</label><input type="number" id="rep-b" value="0" min="0" max="60" inputmode="numeric"></div>
       </div>
       <div style="background:var(--surface2); border-radius:var(--r-sm); padding:12px 14px; margin-bottom:12px; text-align:center;">
         <div style="font-size:12px; color:var(--text3); margin-bottom:2px;">合計送信数</div>
@@ -307,8 +307,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     </div>
     <div class="filter-bar">
       <button class="chip on" onclick="setFilter('all',this)">すべて</button>
-      <button class="chip" onclick="setFilter('A',this)">Acct A</button>
-      <button class="chip" onclick="setFilter('B',this)">Acct B</button>
+      <button class="chip" onclick="setFilter('A',this)">代表者</button>
+      <button class="chip" onclick="setFilter('B',this)">企業</button>
       <button class="chip" onclick="setFilter('DM済',this)">DM済</button>
       <button class="chip" onclick="setFilter('返信あり',this)">返信あり</button>
       <button class="chip" onclick="setFilter('NG',this)">NG</button>
@@ -355,7 +355,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 // ── 定数 ──
 const GAS_KEY = 'dm_mgr_gas';
 const MEMBERS_KEY = 'dm_mgr_members';
-const DEFAULT_MEMBERS = ['担当者1', '担当者2', '担当者3', '担当者4'];
+const DEFAULT_MEMBERS = ['かずき', 'らんま', '', 'はるか'];
 
 // Discord Webhook（直接送信）
 const DISCORD_ADMIN_WEBHOOK = 'https://discord.com/api/webhooks/1503766562509815818/iGy44qsNoilSkollF68HIO1aAL9ZmiC2Vow03PqeuRpuxdDJ56nm-ngUswgnaHvTZ8NQ';
@@ -592,7 +592,7 @@ async function registerFromCheck() {
   const statusEmoji = { 'DM済': '📨', '返信あり': '💬', 'NG': '❌' };
   postToDiscord({ embeds: [{ title: `${statusEmoji[status]||'📋'} 営業先を登録しました`, color: acctColor, fields: [
     { name: 'Instagram ID', value: '`@' + id + '`', inline: true },
-    { name: 'アカウント', value: 'アカウント' + acct, inline: true },
+    { name: 'アカウント', value: acct === 'A' ? '代表者アカウント' : '企業アカウント', inline: true },
     { name: '担当者', value: person, inline: true },
     { name: 'ステータス', value: status, inline: true },
     { name: '業種', value: genre || '未入力', inline: true },
@@ -627,8 +627,8 @@ async function sendReport() {
   try {
     await postToDiscord({ embeds: [{ title: '📊 本日の稼働報告', color: 10181046, fields: [
       { name: '担当者', value: person, inline: true },
-      { name: 'アカウントA', value: `${cntA}通`, inline: true },
-      { name: 'アカウントB', value: `${cntB}通`, inline: true },
+      { name: '代表者アカウント', value: `${cntA}通`, inline: true },
+      { name: '企業アカウント', value: `${cntB}通`, inline: true },
       { name: '合計送信数', value: `**${total}通**`, inline: true },
       { name: '返信あり', value: `${replied}件`, inline: true },
       { name: 'NG', value: `${ng}件`, inline: true },
@@ -694,8 +694,11 @@ function getToday() {
 }
 
 // ── 初期化 ──
+const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbzPBGe70H7JRPflxcsOA1r0iLGRFePljhPg8Z4t773xj34WnVLF9lbJwMj4wAjFIUbObg/exec';
+
 function init() {
-  const url = localStorage.getItem(GAS_KEY) || '';
+  const url = localStorage.getItem(GAS_KEY) || DEFAULT_GAS_URL;
+  if (!localStorage.getItem(GAS_KEY)) localStorage.setItem(GAS_KEY, DEFAULT_GAS_URL);
   document.getElementById('gas-url').value = url;
   updatePill();
   updateAllSelects();
