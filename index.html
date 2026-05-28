@@ -494,17 +494,22 @@ function renderMemberInputs() {
   const members = loadMembers();
   const container = document.getElementById('member-inputs');
   if (!container) return;
-  container.innerHTML = Array.from({length: 6}, (_, i) =>
-    `<div class="field" style="margin-bottom:10px;">
-      <label>${i < 4 ? '担当者' + (i+1) : '予備' + (i-3)}</label>
-      <input type="text" id="member-${i}" placeholder="名前を入力" value="${members[i] || ''}">
-    </div>`
-  ).join('');
+  const labels = ['担当者1', '担当者2', '担当者3', '管理1', '予備1', '予備2'];
+  const fixed = [0, 1, 3]; // かずき・らんま・はるかは固定
+  container.innerHTML = Array.from({length: 6}, (_, i) => {
+    const isFixed = fixed.includes(i);
+    return `<div class="field" style="margin-bottom:10px;">
+      <label>${labels[i]}${isFixed ? ' <span style="font-size:10px;color:var(--text3);">（固定）</span>' : ''}</label>
+      <input type="text" id="member-${i}" placeholder="名前を入力" value="${members[i] || ''}"
+        ${isFixed ? 'readonly style="background:var(--surface2);color:var(--text3);"' : ''}>
+    </div>`;
+  }).join('');
 }
 function saveMembers() {
-  const members = [];
-  for (let i = 0; i < 6; i++) { const v = document.getElementById('member-'+i)?.value.trim(); if (v) members.push(v); }
-  if (!members.length) { alert('最低1人入力してください'); return; }
+  const member2 = document.getElementById('member-2')?.value.trim() || '';
+  const member4 = document.getElementById('member-4')?.value.trim() || '';
+  const member5 = document.getElementById('member-5')?.value.trim() || '';
+  const members = ['かずき', 'らんま', member2, 'はるか', member4, member5];
   localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
   updateAllSelects();
   const okEl = document.getElementById('alert-members');
@@ -701,6 +706,10 @@ function init() {
   if (!localStorage.getItem(GAS_KEY)) localStorage.setItem(GAS_KEY, DEFAULT_GAS_URL);
   document.getElementById('gas-url').value = url;
   updatePill();
+  // 固定メンバー（かずき・らんま・はるか）は常に上書き、それ以外は保持
+  const savedMembers = (() => { try { return JSON.parse(localStorage.getItem(MEMBERS_KEY)) || []; } catch(e) { return []; } })();
+  const fixedMembers = ['かずき', 'らんま', savedMembers[2] || '', 'はるか', savedMembers[4] || '', savedMembers[5] || ''];
+  localStorage.setItem(MEMBERS_KEY, JSON.stringify(fixedMembers));
   updateAllSelects();
   updatePreview();
   ['rep-a','rep-b'].forEach(id => document.getElementById(id).addEventListener('input', updateRepTotal));
