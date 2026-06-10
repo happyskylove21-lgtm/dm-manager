@@ -24,40 +24,30 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; overflow: hidden; }
 body { font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; }
-
 .nav { display: flex; background: var(--surface); border-top: 1px solid var(--border2); position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: var(--safe-bottom); z-index: 100; }
 .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 9px 2px 7px; cursor: pointer; gap: 2px; border: none; background: none; font-family: var(--sans); }
 .nav-item:active { opacity: 0.6; }
 .nav-icon { font-size: 20px; line-height: 1; }
 .nav-label { font-size: 9px; font-weight: 500; color: var(--text3); }
 .nav-item.active .nav-label { color: var(--accent-a); }
-
 .pages { flex: 1; overflow: hidden; position: relative; }
 .page { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(76px + var(--safe-bottom)); display: none; }
 .page.active { display: block; }
-
 .page-header { margin-bottom: 18px; }
 .page-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
 .page-header .sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
-
 .card { background: var(--surface); border-radius: var(--r); padding: 16px; margin-bottom: 12px; border: 1px solid var(--border); }
 .card-label { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 12px; }
-
 .field { margin-bottom: 12px; }
 .field:last-child { margin-bottom: 0; }
 .field label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 6px; }
-.field input, .field select {
-  width: 100%; font-family: var(--sans); font-size: 16px; padding: 13px 14px;
-  border: 1px solid var(--border2); border-radius: var(--r-sm);
-  background: var(--bg); color: var(--text); outline: none; appearance: none; -webkit-appearance: none;
-}
+.field input, .field select { width: 100%; font-family: var(--sans); font-size: 16px; padding: 13px 14px; border: 1px solid var(--border2); border-radius: var(--r-sm); background: var(--bg); color: var(--text); outline: none; appearance: none; -webkit-appearance: none; }
 .field input:focus, .field select:focus { border-color: var(--accent-a); background: var(--surface); }
 .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A09E98' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
 .field-row { display: flex; gap: 10px; }
 .field-row .field { flex: 1; }
 .field-error { font-size: 12px; color: var(--danger); margin-top: 5px; display: none; }
 .field-error.show { display: block; }
-
 .btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; font-family: var(--sans); font-size: 16px; font-weight: 700; padding: 15px; border-radius: var(--r-sm); border: none; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
 .btn:active { transform: scale(0.97); }
 .btn-primary { background: var(--text); color: var(--surface); }
@@ -66,13 +56,12 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .btn-copy { background: var(--accent-a-bg); color: var(--accent-a-text); font-size: 15px; padding: 14px; }
 .btn-sm { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer; font-family: var(--sans); }
 .btn-danger-sm { background: var(--danger-bg); color: var(--danger); }
+.btn-success-sm { background: var(--success-bg); color: var(--success); }
 .btn-mt { margin-top: 12px; }
-
 .alert { font-size: 13px; padding: 12px 14px; border-radius: var(--r-sm); margin-top: 10px; display: none; line-height: 1.5; }
 .alert.show { display: block; }
 .alert-danger { background: var(--danger-bg); color: var(--danger); }
 .alert-success { background: var(--success-bg); color: var(--success); }
-
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .stat { background: var(--surface); border-radius: var(--r); padding: 14px 16px; border: 1px solid var(--border); }
 .stat .n { font-size: 32px; font-weight: 700; font-family: var(--mono); line-height: 1; margin-bottom: 4px; }
@@ -83,14 +72,12 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .stat.s-ng .n { color: var(--danger); }
 .stat.s-total { grid-column: 1 / -1; }
 .stat.s-total .n { font-size: 40px; }
-
 .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; font-family: var(--mono); }
 .b-a { background: var(--accent-a-bg); color: var(--accent-a-text); }
 .b-b { background: var(--accent-b-bg); color: var(--accent-b-text); }
 .b-dm { background: var(--purple-bg); color: var(--purple); }
 .b-rep { background: var(--warned-bg); color: var(--warned); }
 .b-ng { background: var(--danger-bg); color: var(--danger); }
-
 .list-item { display: flex; align-items: flex-start; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 10px; }
 .list-item:last-child { border-bottom: none; }
 .list-main { flex: 1; min-width: 0; }
@@ -98,7 +85,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .list-meta { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
 .list-sub { font-size: 12px; color: var(--text3); }
 .list-date { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 4px; }
-
+.list-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
 .search-wrap { position: relative; margin-bottom: 12px; }
 .search-wrap input { width: 100%; font-size: 16px; font-family: var(--sans); padding: 12px 14px 12px 42px; border: 1px solid var(--border2); border-radius: var(--r-sm); background: var(--surface); color: var(--text); outline: none; }
 .search-wrap input:focus { border-color: var(--accent-a); }
@@ -107,7 +94,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .filter-bar::-webkit-scrollbar { display: none; }
 .chip { flex-shrink: 0; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); white-space: nowrap; }
 .chip.on { background: var(--text); color: var(--surface); border-color: var(--text); }
-
 .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 12px; }
 .setting-row:last-child { border-bottom: none; }
 .setting-label { font-size: 14px; font-weight: 500; }
@@ -115,25 +101,21 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .pill { font-size: 11px; font-family: var(--mono); padding: 4px 12px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
 .pill.on { background: var(--success-bg); color: var(--success); }
 .pill.off { background: var(--surface2); color: var(--text3); }
-
 .count-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 12px; }
 .count-field { flex: 1; }
 .count-field label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 6px; }
 .count-field input { width: 100%; text-align: center; font-family: var(--mono); font-size: 28px; font-weight: 500; padding: 12px 8px; border: 1px solid var(--border2); border-radius: var(--r-sm); background: var(--bg); color: var(--text); outline: none; }
 .count-field input:focus { border-color: var(--accent-a); background: var(--surface); }
 .count-sep { padding-bottom: 16px; color: var(--text3); font-size: 22px; }
-
 .tpl-preview { background: var(--bg); border: 1px solid var(--border2); border-radius: var(--r-sm); padding: 14px; font-size: 13px; line-height: 2.0; white-space: pre-wrap; word-break: break-all; color: var(--text); font-family: var(--sans); margin-bottom: 12px; user-select: text; }
 .tpl-var-empty { color: var(--warned); font-weight: 700; background: var(--warned-bg); border-radius: 3px; padding: 0 2px; }
 .tpl-var-filled { color: var(--accent-a); font-weight: 700; }
-
 .check-result { display: none; align-items: center; gap: 10px; padding: 14px; border-radius: var(--r-sm); margin-bottom: 12px; }
 .check-result.show { display: flex; }
 .check-result.ok { background: var(--success-bg); color: var(--success); }
 .check-result.ng { background: var(--danger-bg); color: var(--danger); }
 .check-icon { font-size: 24px; flex-shrink: 0; }
 .check-text { font-size: 14px; font-weight: 500; line-height: 1.5; }
-
 .dup-result { text-align: center; padding: 24px 16px; border-radius: var(--r-sm); display: none; }
 .dup-result.show { display: block; }
 .dup-result.ok { background: var(--success-bg); }
@@ -148,27 +130,46 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .dup-result.ng .small-text { color: var(--danger); }
 .dup-result.checking .big-text { color: var(--text2); }
 .dup-result.checking .small-text { color: var(--text3); }
-
 .empty { text-align: center; padding: 48px 0; color: var(--text3); font-size: 14px; }
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border2); border-top-color: var(--accent-a); border-radius: 50%; animation: spin 0.7s linear infinite; }
 .spinner-lg { width: 32px; height: 32px; border-width: 3px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .list-loading { text-align: center; padding: 40px 0; }
 .refresh-btn { font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); }
-
 .input-group { background: var(--accent-a-bg); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 12px; }
 .input-group-label { font-size: 11px; font-weight: 700; color: var(--accent-a-text); letter-spacing: 0.06em; margin-bottom: 10px; }
 .input-group .field { margin-bottom: 10px; }
 .input-group .field:last-child { margin-bottom: 0; }
 .input-group .field label { color: var(--accent-a-text); }
 .input-group .field input { background: var(--surface); border-color: rgba(37,99,235,0.2); }
-
 .input-group2 { background: var(--success-bg); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 12px; }
 .input-group2-label { font-size: 11px; font-weight: 700; color: var(--accent-b-text); letter-spacing: 0.06em; margin-bottom: 10px; }
 .input-group2 .field { margin-bottom: 10px; }
 .input-group2 .field:last-child { margin-bottom: 0; }
 .input-group2 .field label { color: var(--accent-b-text); }
 .input-group2 .field input { background: var(--surface); border-color: rgba(22,163,74,0.2); }
+/* 種別ボタン */
+.type-btns { display: flex; gap: 8px; margin-bottom: 10px; }
+.type-btn { flex: 1; font-family: var(--sans); font-size: 13px; font-weight: 700; padding: 10px 8px; border-radius: var(--r-sm); border: 1.5px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; transition: all 0.15s; }
+.type-btn.on { background: var(--accent-a); color: #fff; border-color: var(--accent-a); }
+/* ステータス変更モーダル */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--surface); border-radius: var(--r) var(--r) 0 0; padding: 20px 20px calc(20px + var(--safe-bottom)); width: 100%; max-width: 480px; }
+.modal-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.status-btns { display: flex; flex-direction: column; gap: 8px; }
+.status-btn { font-family: var(--sans); font-size: 15px; font-weight: 500; padding: 14px; border-radius: var(--r-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); cursor: pointer; text-align: left; }
+.status-btn:active { opacity: 0.7; }
+.status-btn.s-dm { border-color: var(--purple); color: var(--purple); }
+.status-btn.s-rep { border-color: var(--warned); color: var(--warned); }
+.status-btn.s-ng { border-color: var(--danger); color: var(--danger); }
+/* 日次集計 */
+.daily-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.daily-card { background: var(--surface); border-radius: var(--r-sm); padding: 12px 14px; border: 1px solid var(--border); }
+.daily-card .n { font-size: 24px; font-weight: 700; font-family: var(--mono); line-height: 1; margin-bottom: 3px; color: var(--accent-a); }
+.daily-card .l { font-size: 10px; color: var(--text3); }
+.daily-card.full { grid-column: 1 / -1; }
+.daily-card.full .n { font-size: 36px; color: var(--text); }
 </style>
 </head>
 <body>
@@ -178,33 +179,40 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
   <div class="page active" id="page-home">
     <div class="page-header">
       <h2>DM営業管理</h2>
-      <div class="sub">全データ共有 · スプレッドシート連携</div>
+      <div class="sub" id="home-date"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">本日の集計（0〜24時）</div>
+      <div class="daily-grid">
+        <div class="daily-card full"><div class="n" id="d-total">—</div><div class="l">本日の総登録数</div></div>
+        <div class="daily-card"><div class="n" id="d-a">—</div><div class="l">代表者アカウント</div></div>
+        <div class="daily-card"><div class="n" id="d-b">—</div><div class="l">企業アカウント</div></div>
+        <div class="daily-card"><div class="n" id="d-rep">—</div><div class="l">返信あり</div></div>
+        <div class="daily-card"><div class="n" id="d-ng">—</div><div class="l">NG</div></div>
+      </div>
     </div>
     <div class="stats-grid">
-      <div class="stat s-total"><div class="n" id="s-total">—</div><div class="l">総登録数</div></div>
+      <div class="stat s-total"><div class="n" id="s-total">—</div><div class="l">累計総登録数</div></div>
       <div class="stat s-a"><div class="n" id="s-a">—</div><div class="l">代表者アカウント</div></div>
       <div class="stat s-b"><div class="n" id="s-b">—</div><div class="l">企業アカウント</div></div>
-      <div class="stat s-r"><div class="n" id="s-r">—</div><div class="l">返信あり</div></div>
-      <div class="stat s-ng"><div class="n" id="s-ng">—</div><div class="l">NG</div></div>
-    </div>
-    <div class="card" style="background:var(--surface2); border:none;">
-      <div style="font-size:13px; color:var(--text2); line-height:2.1;">
-        <div>📝 テンプレ → DM文を作成してコピー</div>
-        <div>🔍 チェック → 重複をリアルタイム確認・登録</div>
-        <div>📣 報告 → 送信完了をDiscordに共有</div>
-        <div>📋 リスト → 全員共通の営業先一覧</div>
-      </div>
+      <div class="stat s-r"><div class="n" id="s-r">—</div><div class="l">返信あり（累計）</div></div>
+      <div class="stat s-ng"><div class="n" id="s-ng">—</div><div class="l">NG（累計）</div></div>
     </div>
   </div>
 
   <!-- テンプレート -->
   <div class="page" id="page-template">
-    <div class="page-header">
-      <h2>送信テンプレート</h2>
-      <div class="sub">入力 → プレビュー確認 → コピー</div>
+    <div class="page-header"><h2>送信テンプレート</h2><div class="sub">入力 → プレビュー確認 → コピー</div></div>
+    <div class="card">
+      <div class="card-label">① 送信先の種別</div>
+      <div class="type-btns">
+        <button class="type-btn on" id="type-brand" onclick="setType('ブランド',this)">ブランド</button>
+        <button class="type-btn" id="type-company" onclick="setType('会社',this)">会社</button>
+        <button class="type-btn" id="type-facility" onclick="setType('施設',this)">施設</button>
+      </div>
     </div>
     <div class="card">
-      <div class="card-label">① 先方の情報</div>
+      <div class="card-label">② 先方の情報</div>
       <div class="input-group">
         <div class="input-group-label">📨 送信先</div>
         <div class="field"><label for="tpl-company">[先方の会社or施設]</label><input type="text" id="tpl-company" placeholder="例: 〇〇ホテル" oninput="updatePreview()"><div class="field-error" id="err-company">入力してください</div></div>
@@ -220,22 +228,16 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       </div>
     </div>
     <div class="card">
-      <div class="card-label">② プレビュー（固定テンプレ）</div>
+      <div class="card-label">③ プレビュー（固定テンプレ）</div>
       <div class="tpl-preview" id="tpl-preview"></div>
-      <div class="check-result" id="check-result">
-        <div class="check-icon" id="check-icon"></div>
-        <div class="check-text" id="check-text"></div>
-      </div>
+      <div class="check-result" id="check-result"><div class="check-icon" id="check-icon"></div><div class="check-text" id="check-text"></div></div>
       <button class="btn btn-copy" onclick="checkAndCopy()">📋 チェックしてコピー</button>
     </div>
   </div>
 
   <!-- 重複チェック -->
   <div class="page" id="page-check">
-    <div class="page-header">
-      <h2>重複チェック</h2>
-      <div class="sub">スプレッドシートをリアルタイム参照</div>
-    </div>
+    <div class="page-header"><h2>重複チェック</h2><div class="sub">スプレッドシートをリアルタイム参照</div></div>
     <div class="card">
       <div class="field"><label for="check-id">Instagram ID（@なし）</label>
         <input type="text" id="check-id" placeholder="例: sato_bakery_tokyo" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="liveCheck()">
@@ -247,7 +249,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       </div>
     </div>
     <div class="card">
-      <div class="card-label">そのまま登録する</div>
+      <div class="card-label">登録する</div>
       <div class="field-row">
         <div class="field"><label>アカウント</label><select id="reg-acct"><option value="A">代表者アカウント</option><option value="B">企業アカウント</option></select></div>
         <div class="field"><label>担当者</label><select id="reg-person"></select></div>
@@ -256,6 +258,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
         <div class="field"><label>ステータス</label><select id="reg-status"><option>DM済</option><option>返信あり</option><option>NG</option></select></div>
         <div class="field"><label>業種（任意）</label><input type="text" id="reg-genre" placeholder="例: カフェ"></div>
       </div>
+      <div class="field"><label for="reg-email">メールアドレス（任意）</label><input type="email" id="reg-email" placeholder="例: info@example.com"></div>
       <div class="alert alert-danger" id="reg-err"></div>
       <div class="alert alert-success" id="reg-ok"></div>
       <button class="btn btn-primary btn-mt" onclick="registerFromCheck()">✓ このIDを登録する</button>
@@ -264,10 +267,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 
   <!-- 報告 -->
   <div class="page" id="page-report">
-    <div class="page-header">
-      <h2>送信報告</h2>
-      <div class="sub">稼働完了後にDiscordへ</div>
-    </div>
+    <div class="page-header"><h2>送信報告</h2><div class="sub">稼働完了後にDiscordへ</div></div>
     <div class="card">
       <div class="card-label">担当者・送信数</div>
       <div class="field"><label>担当者</label><select id="rep-person"></select></div>
@@ -299,10 +299,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
   <div class="page" id="page-list">
     <div class="page-header"><h2>営業先リスト</h2><div class="sub" id="list-sub">全員共通・スプレッドシートから取得</div></div>
     <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
-      <div class="search-wrap" style="margin-bottom:0; flex:1;">
-        <span class="search-icon">🔍</span>
-        <input type="search" id="search" placeholder="ID・担当者・業種で検索" oninput="debounceSearch()">
-      </div>
+      <div class="search-wrap" style="margin-bottom:0; flex:1;"><span class="search-icon">🔍</span><input type="search" id="search" placeholder="ID・担当者・業種で検索" oninput="debounceSearch()"></div>
       <button class="refresh-btn" onclick="loadList()">↻ 更新</button>
     </div>
     <div class="filter-bar">
@@ -325,7 +322,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div class="page-header"><h2>設定</h2></div>
     <div class="card">
       <div class="card-label">担当者メンバー</div>
-      <div style="font-size:12px; color:var(--text3); margin-bottom:12px;">最大6名まで登録できます。保存すると各画面に反映されます。</div>
+      <div style="font-size:12px; color:var(--text3); margin-bottom:12px;">（固定）の欄は変更できません</div>
       <div id="member-inputs"></div>
       <button class="btn btn-primary btn-mt" onclick="saveMembers()">✓ メンバーを保存</button>
       <div class="alert alert-success" id="alert-members"></div>
@@ -342,6 +339,19 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 
 </div>
 
+<!-- ステータス変更モーダル -->
+<div class="modal-overlay" id="status-modal" onclick="closeStatusModal(event)">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">ステータスを変更</div>
+    <div class="status-btns">
+      <button class="status-btn s-dm" onclick="changeStatus('DM済')">📨 DM済</button>
+      <button class="status-btn s-rep" onclick="changeStatus('返信あり')">💬 返信あり</button>
+      <button class="status-btn s-ng" onclick="changeStatus('NG')">❌ NG</button>
+    </div>
+    <button class="btn btn-primary" style="margin-top:12px;" onclick="closeStatusModal()">キャンセル</button>
+  </div>
+</div>
+
 <nav class="nav">
   <button class="nav-item active" onclick="goPage('home',this)"><span class="nav-icon">🏠</span><span class="nav-label">ホーム</span></button>
   <button class="nav-item" onclick="goPage('template',this)"><span class="nav-icon">📝</span><span class="nav-label">テンプレ</span></button>
@@ -352,19 +362,27 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 </nav>
 
 <script>
-// ── 定数 ──
 const GAS_KEY = 'dm_mgr_gas';
 const MEMBERS_KEY = 'dm_mgr_members';
-const DEFAULT_MEMBERS = ['かずき', 'らんま', '', 'はるか'];
-
-// Discord Webhook（直接送信）
+const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbzPBGe70H7JRPflxcsOA1r0iLGRFePljhPg8Z4t773xj34WnVLF9lbJwMj4wAjFIUbObg/exec';
+const DEFAULT_MEMBERS = ['かずき', 'らんま', '', 'はるか', '', ''];
 const DISCORD_ADMIN_WEBHOOK = 'https://discord.com/api/webhooks/1503766562509815818/iGy44qsNoilSkollF68HIO1aAL9ZmiC2Vow03PqeuRpuxdDJ56nm-ngUswgnaHvTZ8NQ';
 
 let currentFilter = 'all';
 let checkTimer = null;
 let searchTimer = null;
+let currentEditId = null;
+let currentEditRow = null;
+let selectedType = 'ブランド';
 
 // ── テンプレート ──
+function setType(type, btn) {
+  selectedType = type;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  updatePreview();
+}
+
 function buildTemplate() {
   return `{会社名}　広報　ご担当者様
 
@@ -378,7 +396,7 @@ function buildTemplate() {
 ・貴社 {サービス詳細}のご担当者の方、または広報など社外窓口をご担当の方とお打ち合わせの時間を30分程度いただけないでしょうか。
 
 【ご相談背景】
-・貴社のような施設と今後、広告宣伝の連携の可能性があるのかご相談させていただきたいです。
+・貴社のような${selectedType}と今後、広告宣伝の連携の可能性があるのかご相談させていただきたいです。
 ・{ターゲット}に人気のあるインフルエンサーを活用した広告宣伝のご支援をさせていただきたいです。
 　　
 【貴社のメリット】
@@ -453,7 +471,7 @@ function checkAndCopy() {
 }
 
 // ── GAS通信 ──
-function getGasUrl() { return (localStorage.getItem(GAS_KEY) || '').trim(); }
+function getGasUrl() { return (localStorage.getItem(GAS_KEY) || DEFAULT_GAS_URL).trim(); }
 function saveGasUrl() { localStorage.setItem(GAS_KEY, document.getElementById('gas-url').value.trim()); updatePill(); }
 function updatePill() {
   const ok = !!getGasUrl();
@@ -478,11 +496,7 @@ async function testConnection() {
 // ── Discord直接送信 ──
 async function postToDiscord(body) {
   try {
-    await fetch(DISCORD_ADMIN_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+    await fetch(DISCORD_ADMIN_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   } catch(e) { console.log('Discord送信エラー:', e); }
 }
 
@@ -495,7 +509,7 @@ function renderMemberInputs() {
   const container = document.getElementById('member-inputs');
   if (!container) return;
   const labels = ['担当者1', '担当者2', '担当者3', '管理1', '予備1', '予備2'];
-  const fixed = [0, 1, 3]; // かずき・らんま・はるかは固定
+  const fixed = [0, 1, 3];
   container.innerHTML = Array.from({length: 6}, (_, i) => {
     const isFixed = fixed.includes(i);
     return `<div class="field" style="margin-bottom:10px;">
@@ -506,10 +520,13 @@ function renderMemberInputs() {
   }).join('');
 }
 function saveMembers() {
-  const member2 = document.getElementById('member-2')?.value.trim() || '';
-  const member4 = document.getElementById('member-4')?.value.trim() || '';
-  const member5 = document.getElementById('member-5')?.value.trim() || '';
-  const members = ['かずき', 'らんま', member2, 'はるか', member4, member5];
+  const saved = loadMembers();
+  const members = ['かずき', 'らんま',
+    document.getElementById('member-2')?.value.trim() || '',
+    'はるか',
+    document.getElementById('member-4')?.value.trim() || '',
+    document.getElementById('member-5')?.value.trim() || ''
+  ];
   localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
   updateAllSelects();
   const okEl = document.getElementById('alert-members');
@@ -517,7 +534,7 @@ function saveMembers() {
   setTimeout(() => okEl.classList.remove('show'), 2500);
 }
 function updateAllSelects() {
-  const members = loadMembers();
+  const members = loadMembers().filter(m => m);
   ['reg-person','rep-person'].forEach(id => {
     const sel = document.getElementById(id); if (!sel) return;
     const cur = sel.value;
@@ -526,15 +543,23 @@ function updateAllSelects() {
   });
 }
 
-// ── 統計 ──
+// ── 統計（累計＋日次） ──
 async function loadStats() {
-  const r = await callGas({ action: 'stats' });
+  const today = getTodayStr();
+  document.getElementById('home-date').textContent = today + ' の集計';
+  const r = await callGas({ action: 'stats', today });
   if (r.ok && r.data) {
-    document.getElementById('s-total').textContent = r.data.total ?? '—';
-    document.getElementById('s-a').textContent = r.data.a ?? '—';
-    document.getElementById('s-b').textContent = r.data.b ?? '—';
-    document.getElementById('s-r').textContent = r.data.replied ?? '—';
-    document.getElementById('s-ng').textContent = r.data.ng ?? '—';
+    const d = r.data;
+    document.getElementById('s-total').textContent = d.total ?? '—';
+    document.getElementById('s-a').textContent = d.a ?? '—';
+    document.getElementById('s-b').textContent = d.b ?? '—';
+    document.getElementById('s-r').textContent = d.replied ?? '—';
+    document.getElementById('s-ng').textContent = d.ng ?? '—';
+    document.getElementById('d-total').textContent = d.todayTotal ?? '0';
+    document.getElementById('d-a').textContent = d.todayA ?? '0';
+    document.getElementById('d-b').textContent = d.todayB ?? '0';
+    document.getElementById('d-rep').textContent = d.todayReplied ?? '0';
+    document.getElementById('d-ng').textContent = d.todayNg ?? '0';
   }
 }
 
@@ -554,12 +579,6 @@ function liveCheck() {
 }
 async function doCheck(id) {
   const el = document.getElementById('dup-result');
-  if (!getGasUrl()) {
-    el.className = 'dup-result show ng';
-    document.getElementById('dup-icon').textContent = '⚙️';
-    document.getElementById('dup-text').textContent = 'GAS未接続';
-    document.getElementById('dup-sub').textContent = '設定画面でURLを入力してください'; return;
-  }
   const r = await callGas({ action: 'check', id });
   el.classList.remove('checking');
   if (!r.ok) { el.className = 'dup-result show ng'; document.getElementById('dup-icon').textContent = '❌'; document.getElementById('dup-text').textContent = '通信エラー'; document.getElementById('dup-sub').textContent = r.msg; return; }
@@ -582,30 +601,33 @@ async function registerFromCheck() {
   const person = document.getElementById('reg-person').value;
   const status = document.getElementById('reg-status').value;
   const genre = document.getElementById('reg-genre').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
   const errEl = document.getElementById('reg-err');
   const okEl = document.getElementById('reg-ok');
   errEl.classList.remove('show'); okEl.classList.remove('show');
   if (!id) { errEl.textContent = 'IDを上の欄に入力してください'; errEl.classList.add('show'); return; }
-  if (!getGasUrl()) { errEl.textContent = '設定画面でGAS URLを入力してください'; errEl.classList.add('show'); return; }
   const date = getToday();
-  const r = await callGas({ action: 'register', id, acct, person, status, genre, date });
+  const r = await callGas({ action: 'register', id, acct, person, status, genre, email, date });
   if (!r.ok) { errEl.textContent = '通信エラー: ' + r.msg; errEl.classList.add('show'); return; }
   if (r.data?.status === 'duplicate') { errEl.textContent = `⚠️ @${id} はすでに登録済みです`; errEl.classList.add('show'); return; }
 
-  // Discordに直接通知
+  const acctLabel = acct === 'A' ? '代表者アカウント' : '企業アカウント';
   const acctColor = acct === 'A' ? 3447003 : 3066993;
   const statusEmoji = { 'DM済': '📨', '返信あり': '💬', 'NG': '❌' };
-  postToDiscord({ embeds: [{ title: `${statusEmoji[status]||'📋'} 営業先を登録しました`, color: acctColor, fields: [
+  const fields = [
     { name: 'Instagram ID', value: '`@' + id + '`', inline: true },
-    { name: 'アカウント', value: acct === 'A' ? '代表者アカウント' : '企業アカウント', inline: true },
+    { name: 'アカウント', value: acctLabel, inline: true },
     { name: '担当者', value: person, inline: true },
     { name: 'ステータス', value: status, inline: true },
     { name: '業種', value: genre || '未入力', inline: true },
-  ], footer: { text: date } }] });
+  ];
+  if (email) fields.push({ name: 'メールアドレス', value: email, inline: false });
+  postToDiscord({ embeds: [{ title: `${statusEmoji[status]||'📋'} 営業先を登録しました`, color: acctColor, fields, footer: { text: date } }] });
 
-  okEl.textContent = `✓ @${id} をスプレッドシートに登録しました`; okEl.classList.add('show');
+  okEl.textContent = `✓ @${id} を登録しました`; okEl.classList.add('show');
   document.getElementById('check-id').value = '';
   document.getElementById('reg-genre').value = '';
+  document.getElementById('reg-email').value = '';
   document.getElementById('dup-result').classList.remove('show');
   setTimeout(() => okEl.classList.remove('show'), 3000);
 }
@@ -616,7 +638,6 @@ function updateRepTotal() {
   const b = parseInt(document.getElementById('rep-b').value) || 0;
   document.getElementById('rep-total').textContent = a + b;
 }
-
 async function sendReport() {
   const person = document.getElementById('rep-person').value;
   const cntA = parseInt(document.getElementById('rep-a').value) || 0;
@@ -647,6 +668,30 @@ async function sendReport() {
   } catch(e) { errEl.textContent = '送信失敗: ' + e.message; errEl.classList.add('show'); }
 }
 
+// ── ステータス変更 ──
+function openStatusModal(id, currentStatus) {
+  currentEditId = id;
+  document.getElementById('modal-title').textContent = `@${id} のステータスを変更`;
+  document.getElementById('status-modal').classList.add('show');
+}
+function closeStatusModal(e) {
+  if (e && e.target !== document.getElementById('status-modal')) return;
+  document.getElementById('status-modal').classList.remove('show');
+  currentEditId = null;
+}
+async function changeStatus(newStatus) {
+  if (!currentEditId) return;
+  document.getElementById('status-modal').classList.remove('show');
+  const r = await callGas({ action: 'updateStatus', id: currentEditId, status: newStatus, date: getToday() });
+  if (r.ok) {
+    loadList();
+    loadStats();
+  } else {
+    alert('更新失敗: ' + r.msg);
+  }
+  currentEditId = null;
+}
+
 // ── リスト ──
 function setFilter(f, btn) {
   currentFilter = f;
@@ -661,15 +706,14 @@ async function loadList() {
   const loading = document.getElementById('list-loading');
   const search = document.getElementById('search').value.trim();
   body.innerHTML = ''; empty.style.display = 'none'; loading.style.display = 'block';
-  if (!getGasUrl()) { loading.style.display = 'none'; empty.textContent = '設定画面でGAS URLを入力してください'; empty.style.display = 'block'; return; }
   const r = await callGas({ action: 'list', filter: currentFilter, search });
   loading.style.display = 'none';
-  if (!r.ok || !r.data) { empty.textContent = '取得失敗: ' + r.msg; empty.style.display = 'block'; return; }
+  if (!r.ok || !r.data) { empty.textContent = '取得失敗: ' + (r.msg || ''); empty.style.display = 'block'; return; }
   const rows = r.data.rows || [];
   document.getElementById('list-sub').textContent = `全員共通 · ${rows.length}件`;
   if (!rows.length) { empty.textContent = 'データがありません'; empty.style.display = 'block'; return; }
   const sb = s => { const m = {'DM済':'b-dm','返信あり':'b-rep','NG':'b-ng'}; return `<span class="badge ${m[s]||''}">${s}</span>`; };
-  const ab = a => `<span class="badge b-${a.toLowerCase()}">Acct ${a}</span>`;
+  const ab = a => `<span class="badge b-${a.toLowerCase()}">${a === 'A' ? '代表者' : '企業'}</span>`;
   body.innerHTML = rows.map(r =>
     `<div class="list-item">
       <div class="list-main">
@@ -677,6 +721,9 @@ async function loadList() {
         <div class="list-meta">${ab(r.acct)} ${sb(r.status)}${r.genre ? ` <span class="list-sub">${r.genre}</span>` : ''}</div>
         <div class="list-meta" style="margin-top:3px;"><span class="list-sub">${r.person}</span></div>
         <div class="list-date">${r.date}</div>
+      </div>
+      <div class="list-actions">
+        <button class="btn-sm btn-success-sm" onclick="openStatusModal('${r.id}', '${r.status}')">変更</button>
       </div>
     </div>`
   ).join('');
@@ -689,7 +736,7 @@ function goPage(name, btn) {
   document.getElementById('page-' + name).classList.add('active');
   btn.classList.add('active');
   if (name === 'list') loadList();
-  if (name === 'settings') { renderMemberInputs(); document.getElementById('data-count') && (document.getElementById('data-count').textContent = ''); }
+  if (name === 'settings') renderMemberInputs();
   if (name === 'home') loadStats();
 }
 
@@ -697,19 +744,21 @@ function getToday() {
   const d = new Date();
   return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
+function getTodayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+}
 
 // ── 初期化 ──
-const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbzPBGe70H7JRPflxcsOA1r0iLGRFePljhPg8Z4t773xj34WnVLF9lbJwMj4wAjFIUbObg/exec';
-
 function init() {
   const url = localStorage.getItem(GAS_KEY) || DEFAULT_GAS_URL;
   if (!localStorage.getItem(GAS_KEY)) localStorage.setItem(GAS_KEY, DEFAULT_GAS_URL);
   document.getElementById('gas-url').value = url;
   updatePill();
-  // 固定メンバー（かずき・らんま・はるか）は常に上書き、それ以外は保持
-  const savedMembers = (() => { try { return JSON.parse(localStorage.getItem(MEMBERS_KEY)) || []; } catch(e) { return []; } })();
-  const fixedMembers = ['かずき', 'らんま', savedMembers[2] || '', 'はるか', savedMembers[4] || '', savedMembers[5] || ''];
-  localStorage.setItem(MEMBERS_KEY, JSON.stringify(fixedMembers));
+  // 固定メンバーを強制適用
+  const saved = loadMembers();
+  const members = ['かずき', 'らんま', saved[2] || '', 'はるか', saved[4] || '', saved[5] || ''];
+  localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
   updateAllSelects();
   updatePreview();
   ['rep-a','rep-b'].forEach(id => document.getElementById(id).addEventListener('input', updateRepTotal));
