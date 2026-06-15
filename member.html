@@ -24,69 +24,53 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; overflow: hidden; }
 body { font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; }
-
 .nav { display: flex; background: var(--surface); border-top: 1px solid var(--border2); position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: var(--safe-bottom); z-index: 100; }
 .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 9px 2px 7px; cursor: pointer; gap: 2px; border: none; background: none; font-family: var(--sans); }
 .nav-item:active { opacity: 0.6; }
 .nav-icon { font-size: 20px; line-height: 1; }
 .nav-label { font-size: 9px; font-weight: 500; color: var(--text3); }
 .nav-item.active .nav-label { color: var(--accent-a); }
-
 .pages { flex: 1; overflow: hidden; position: relative; }
 .page { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(76px + var(--safe-bottom)); display: none; }
 .page.active { display: block; }
-
 .page-header { margin-bottom: 18px; }
 .page-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
 .page-header .sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
-
 .card { background: var(--surface); border-radius: var(--r); padding: 16px; margin-bottom: 12px; border: 1px solid var(--border); }
 .card-label { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 12px; }
-
 .field { margin-bottom: 12px; }
 .field:last-child { margin-bottom: 0; }
 .field label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 6px; }
-.field input, .field select {
-  width: 100%; font-family: var(--sans); font-size: 16px; padding: 13px 14px;
-  border: 1px solid var(--border2); border-radius: var(--r-sm);
-  background: var(--bg); color: var(--text); outline: none; appearance: none; -webkit-appearance: none;
-}
+.field input, .field select { width: 100%; font-family: var(--sans); font-size: 16px; padding: 13px 14px; border: 1px solid var(--border2); border-radius: var(--r-sm); background: var(--bg); color: var(--text); outline: none; appearance: none; -webkit-appearance: none; }
 .field input:focus, .field select:focus { border-color: var(--accent-a); background: var(--surface); }
 .field-error { font-size: 12px; color: var(--danger); margin-top: 5px; display: none; }
 .field-error.show { display: block; }
-
 .btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; font-family: var(--sans); font-size: 16px; font-weight: 700; padding: 15px; border-radius: var(--r-sm); border: none; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
 .btn:active { transform: scale(0.97); }
 .btn-primary { background: var(--text); color: var(--surface); }
 .btn-discord { background: var(--discord); color: #fff; }
 .btn-copy { background: var(--accent-a-bg); color: var(--accent-a-text); font-size: 15px; padding: 14px; }
 .btn-mt { margin-top: 12px; }
-
 .alert { font-size: 13px; padding: 12px 14px; border-radius: var(--r-sm); margin-top: 10px; display: none; line-height: 1.5; }
 .alert.show { display: block; }
 .alert-danger { background: var(--danger-bg); color: var(--danger); }
 .alert-success { background: var(--success-bg); color: var(--success); }
-
 .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; font-family: var(--mono); }
 .b-a { background: var(--accent-a-bg); color: var(--accent-a-text); }
 .b-b { background: var(--accent-b-bg); color: var(--accent-b-text); }
-
 .list-item { display: flex; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 10px; }
 .list-item:last-child { border-bottom: none; }
 .list-main { flex: 1; min-width: 0; }
 .list-id { font-family: var(--mono); font-size: 14px; font-weight: 500; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .list-date { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 4px; }
-
 .search-wrap { position: relative; margin-bottom: 12px; }
 .search-wrap input { width: 100%; font-size: 16px; font-family: var(--sans); padding: 12px 14px 12px 42px; border: 1px solid var(--border2); border-radius: var(--r-sm); background: var(--surface); color: var(--text); outline: none; }
 .search-wrap input:focus { border-color: var(--accent-a); }
 .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 18px; pointer-events: none; }
-
 .filter-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; scrollbar-width: none; }
 .filter-bar::-webkit-scrollbar { display: none; }
 .chip { flex-shrink: 0; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); white-space: nowrap; }
 .chip.on { background: var(--text); color: var(--surface); border-color: var(--text); }
-
 .dup-result { text-align: center; padding: 24px 16px; border-radius: var(--r-sm); display: none; }
 .dup-result.show { display: block; }
 .dup-result.ok { background: var(--success-bg); }
@@ -101,45 +85,29 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .dup-result.ng .small-text { color: var(--danger); }
 .dup-result.checking .big-text { color: var(--text2); }
 .dup-result.checking .small-text { color: var(--text3); }
-
 .tpl-preview { background: var(--bg); border: 1px solid var(--border2); border-radius: var(--r-sm); padding: 14px; font-size: 13px; line-height: 2.0; white-space: pre-wrap; word-break: break-all; color: var(--text); font-family: var(--sans); margin-bottom: 12px; user-select: text; }
 .tpl-var-empty { color: var(--warned); font-weight: 700; background: var(--warned-bg); border-radius: 3px; padding: 0 2px; }
 .tpl-var-filled { color: var(--accent-a); font-weight: 700; }
-
 .check-result { display: none; align-items: center; gap: 10px; padding: 14px; border-radius: var(--r-sm); margin-bottom: 12px; }
 .check-result.show { display: flex; }
 .check-result.ok { background: var(--success-bg); color: var(--success); }
 .check-result.ng { background: var(--danger-bg); color: var(--danger); }
 .check-icon { font-size: 24px; flex-shrink: 0; }
 .check-text { font-size: 14px; font-weight: 500; line-height: 1.5; }
-
 .input-group { background: var(--accent-a-bg); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 12px; }
 .input-group-label { font-size: 11px; font-weight: 700; color: var(--accent-a-text); letter-spacing: 0.06em; margin-bottom: 10px; }
 .input-group .field { margin-bottom: 10px; }
 .input-group .field:last-child { margin-bottom: 0; }
 .input-group .field label { color: var(--accent-a-text); }
 .input-group .field input { background: var(--surface); border-color: rgba(37,99,235,0.2); }
-
 .empty { text-align: center; padding: 48px 0; color: var(--text3); font-size: 14px; }
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border2); border-top-color: var(--accent-a); border-radius: 50%; animation: spin 0.7s linear infinite; }
 .spinner-lg { width: 32px; height: 32px; border-width: 3px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .list-loading { text-align: center; padding: 40px 0; }
 .refresh-btn { font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--sans); }
-
-/* ── ニックネームバナー ── */
-.nickname-banner {
-  border-radius: var(--r);
-  padding: 14px 16px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563EB 100%);
-}
-.nickname-banner.unset {
-  background: linear-gradient(135deg, #92400e 0%, #D97706 100%);
-}
+.nickname-banner { border-radius: var(--r); padding: 14px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #1e3a8a 0%, #2563EB 100%); }
+.nickname-banner.unset { background: linear-gradient(135deg, #92400e 0%, #D97706 100%); }
 .nn-icon { font-size: 26px; flex-shrink: 0; }
 .nn-body { flex: 1; min-width: 0; }
 .nn-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.65); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
@@ -147,25 +115,9 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 .nn-value.placeholder { opacity: 0.65; font-size: 14px; }
 .nn-change-btn { font-size: 12px; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.18); border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-family: var(--sans); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
 .nn-change-btn:active { opacity: 0.7; }
-
-/* ── ニックネーム設定モーダル ── */
-.nn-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 200;
-  display: flex; align-items: flex-end; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.2s;
-}
+.nn-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 .nn-overlay.open { opacity: 1; pointer-events: all; }
-.nn-sheet {
-  background: var(--surface);
-  border-radius: 20px 20px 0 0;
-  padding: 24px 20px calc(24px + var(--safe-bottom));
-  width: 100%; max-width: 480px;
-  transform: translateY(24px);
-  transition: transform 0.25s ease;
-}
+.nn-sheet { background: var(--surface); border-radius: 20px 20px 0 0; padding: 24px 20px calc(24px + var(--safe-bottom)); width: 100%; max-width: 480px; transform: translateY(24px); transition: transform 0.25s ease; }
 .nn-overlay.open .nn-sheet { transform: translateY(0); }
 .nn-sheet-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
 .nn-sheet-sub { font-size: 13px; color: var(--text3); margin-bottom: 18px; line-height: 1.6; }
@@ -178,7 +130,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 </head>
 <body>
 
-<!-- ニックネーム設定モーダル -->
 <div class="nn-overlay" id="nn-overlay" onclick="handleOverlayClick(event)">
   <div class="nn-sheet">
     <div class="nn-sheet-title">👤 ニックネームを設定</div>
@@ -203,8 +154,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <h2>送信テンプレート</h2>
       <div class="sub">入力 → チェック → Discordに納品</div>
     </div>
-
-    <!-- ニックネームバナー -->
     <div class="nickname-banner unset" id="nn-banner">
       <div class="nn-icon">👤</div>
       <div class="nn-body">
@@ -213,7 +162,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       </div>
       <button class="nn-change-btn" onclick="openNnSheet()">設定</button>
     </div>
-
     <div class="card">
       <div class="card-label">① 先方の情報を入力</div>
       <div class="input-group">
@@ -245,7 +193,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
         </div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-label">② プレビュー確認</div>
       <div class="tpl-preview" id="tpl-preview">読み込み中...</div>
@@ -267,9 +214,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div class="card">
       <div class="field">
         <label for="check-id">Instagram ID（@なし）</label>
-        <input type="text" id="check-id" placeholder="例: sato_bakery_tokyo"
-          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-          oninput="liveCheck()">
+        <input type="text" id="check-id" placeholder="例: sato_bakery_tokyo" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="liveCheck()">
       </div>
       <div class="dup-result" id="dup-result">
         <div class="big-icon" id="dup-icon"></div>
@@ -295,8 +240,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     </div>
     <div class="filter-bar">
       <button class="chip on" onclick="setFilter('all',this)">すべて</button>
-      <button class="chip" onclick="setFilter('A',this)">Acct A</button>
-      <button class="chip" onclick="setFilter('B',this)">Acct B</button>
+      <button class="chip" onclick="setFilter('A',this)">代表者</button>
+      <button class="chip" onclick="setFilter('B',this)">企業</button>
     </div>
     <div class="card" style="padding: 0 16px;">
       <div id="list-body"></div>
@@ -314,11 +259,9 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
 </nav>
 
 <script>
-// ── 設定 ──
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzPBGe70H7JRPflxcsOA1r0iLGRFePljhPg8Z4t773xj34WnVLF9lbJwMj4wAjFIUbObg/exec';
 const DISCORD_DELIVER_WEBHOOK = 'https://discord.com/api/webhooks/1506968636257075210/W3w4j2BM53jSQ2i_vnYJGpzai4b31zLWAdNaDzWFJuACnaYy8WFlkWUlp0iaTusDINX-';
 
-// ── 状態 ──
 let selfInfo = { myCompany: '', myRep: '' };
 let copiedText = '';
 let currentFilter = 'all';
@@ -343,28 +286,17 @@ function renderNickname() {
     btn.textContent = '設定';
   }
 }
-
 function openNnSheet() {
   document.getElementById('nn-input').value = nickname;
   document.getElementById('err-nn').classList.remove('show');
   document.getElementById('nn-overlay').classList.add('open');
   setTimeout(() => document.getElementById('nn-input').focus(), 250);
 }
-
-function closeNnSheet() {
-  document.getElementById('nn-overlay').classList.remove('open');
-}
-
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('nn-overlay')) closeNnSheet();
-}
-
+function closeNnSheet() { document.getElementById('nn-overlay').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('nn-overlay')) closeNnSheet(); }
 function saveNickname() {
   const val = document.getElementById('nn-input').value.trim();
-  if (!val) {
-    document.getElementById('err-nn').classList.add('show');
-    return;
-  }
+  if (!val) { document.getElementById('err-nn').classList.add('show'); return; }
   nickname = val;
   localStorage.setItem('dm_nickname', nickname);
   renderNickname();
@@ -443,20 +375,13 @@ function buildFullText() {
 function updatePreview() {
   document.getElementById('check-result').classList.remove('show');
   document.getElementById('discord-btn').style.display = 'none';
-
   let tpl = buildTemplateFront();
-  VARS.forEach(v => {
-    const val = getVal(v.id);
-    if (val) tpl = tpl.split(v.key).join('\x01' + val + '\x01');
-  });
+  VARS.forEach(v => { const val = getVal(v.id); if (val) tpl = tpl.split(v.key).join('\x01' + val + '\x01'); });
   if (selfInfo.myCompany) tpl = tpl.split('{自社名}').join('\x01' + selfInfo.myCompany + '\x01');
   if (selfInfo.myRep) tpl = tpl.split('{代表者名}').join('\x01' + selfInfo.myRep + '\x01');
-
   const escaped = tpl.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   let html = escaped;
-  VARS.forEach(v => {
-    html = html.replace(new RegExp(v.key.replace(/[{}]/g,'\\$&'), 'g'), `<span class="tpl-var-empty">${v.key}</span>`);
-  });
+  VARS.forEach(v => { html = html.replace(new RegExp(v.key.replace(/[{}]/g,'\\$&'), 'g'), `<span class="tpl-var-empty">${v.key}</span>`); });
   html = html.replace(/\{自社名\}/g, '<span class="tpl-var-empty">{自社名}</span>');
   html = html.replace(/\{代表者名\}/g, '<span class="tpl-var-empty">{代表者名}</span>');
   html = html.replace(/\x01([^\x01]+)\x01/g, '<span class="tpl-var-filled">$1</span>');
@@ -468,89 +393,57 @@ function checkAndCopy() {
   const iconEl = document.getElementById('check-icon');
   const textEl = document.getElementById('check-text');
   const discordBtn = document.getElementById('discord-btn');
-
-  // ニックネーム未設定チェック
-  if (!nickname) {
-    openNnSheet();
-    return;
-  }
-
+  if (!nickname) { openNnSheet(); return; }
   let missing = [];
-  // Instagram IDチェック
-  if (!getVal('tpl-instagram')) {
-    document.getElementById('err-instagram')?.classList.add('show');
-    missing.push('Instagram ID');
-  } else {
-    document.getElementById('err-instagram')?.classList.remove('show');
-  }
+  if (!getVal('tpl-instagram')) { document.getElementById('err-instagram')?.classList.add('show'); missing.push('Instagram ID'); }
+  else document.getElementById('err-instagram')?.classList.remove('show');
   VARS.forEach(v => {
     if (!getVal(v.id)) { document.getElementById(v.errId)?.classList.add('show'); missing.push(v.label); }
     else document.getElementById(v.errId)?.classList.remove('show');
   });
-
   resEl.classList.remove('ok','ng'); resEl.classList.add('show');
   discordBtn.style.display = 'none';
-
-  if (missing.length > 0) {
-    resEl.classList.add('ng');
-    iconEl.textContent = '⚠️';
-    textEl.textContent = `未入力: ${missing.join('・')}`;
-    return;
-  }
-
+  if (missing.length > 0) { resEl.classList.add('ng'); iconEl.textContent = '⚠️'; textEl.textContent = `未入力: ${missing.join('・')}`; return; }
   const fullText = buildFullText();
   copiedText = fullText;
-
   if (navigator.clipboard) {
     navigator.clipboard.writeText(fullText).then(() => {
-      resEl.classList.add('ok');
-      iconEl.textContent = '✅';
-      textEl.textContent = `コピーしました！DMに貼り付けてください`;
+      resEl.classList.add('ok'); iconEl.textContent = '✅';
+      textEl.textContent = 'コピーしました！DMに貼り付けてください';
       discordBtn.style.display = 'flex';
     });
   } else {
-    resEl.classList.add('ok');
-    iconEl.textContent = '✅';
+    resEl.classList.add('ok'); iconEl.textContent = '✅';
     textEl.textContent = 'プレビューのテキストをコピーしてください';
     discordBtn.style.display = 'flex';
   }
 }
 
-// ── Discord納品 + GAS記録 ──
+// ── Discord納品（アカウント指定なしで登録）──
 async function sendToDiscord() {
   const btn = document.getElementById('discord-btn');
   btn.textContent = '送信中...';
   btn.disabled = true;
   try {
-    // Discord送信
     await fetch(DISCORD_DELIVER_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content: copiedText })
     });
-
     const instagramId = getVal('tpl-instagram');
     const now = getToday();
-
-    // GASに納品記録
-    await callGas({
-      action: 'deliver',
-      nickname: nickname,
-      companyId: instagramId || getVal('tpl-company'),
-      date: now
-    });
-
-    // GASに企業ID登録（重複チェック用）
-    await callGas({
-      action: 'register',
-      id: instagramId,
-      acct: 'A',
-      person: nickname,
-      status: '送信済み',
-      genre: getVal('tpl-service'),
-      date: now
-    });
-
+    // GASに記録（アカウント指定なし・空欄）
+    if (instagramId) {
+      await callGas({
+        action: 'register',
+        id: instagramId,
+        acct: '',
+        person: nickname,
+        status: 'DM済',
+        genre: getVal('tpl-service'),
+        date: now
+      });
+    }
     btn.textContent = `✅ ${nickname} として納品しました！`;
     btn.style.background = '#16A34A';
     setTimeout(() => {
@@ -567,18 +460,12 @@ async function sendToDiscord() {
 // ── GAS通信 ──
 async function callGas(payload) {
   try {
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload),
-      redirect: 'follow'
-    });
+    const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload), redirect: 'follow' });
     const json = await res.json();
     return { ok: true, data: json };
   } catch(e) { return { ok: false, msg: e.message, data: null }; }
 }
 
-// ── 自社情報取得 ──
 async function fetchSelfInfo() {
   const r = await callGas({ action: 'getSelfInfo' });
   if (r.ok && r.data?.status === 'ok') {
@@ -600,18 +487,11 @@ function liveCheck() {
   clearTimeout(checkTimer);
   checkTimer = setTimeout(() => doCheck(id), 600);
 }
-
 async function doCheck(id) {
   const el = document.getElementById('dup-result');
   const r = await callGas({ action: 'check', id });
   el.classList.remove('checking');
-  if (!r.ok) {
-    el.className = 'dup-result show ng';
-    document.getElementById('dup-icon').textContent = '❌';
-    document.getElementById('dup-text').textContent = '通信エラー';
-    document.getElementById('dup-sub').textContent = r.msg;
-    return;
-  }
+  if (!r.ok) { el.className = 'dup-result show ng'; document.getElementById('dup-icon').textContent = '❌'; document.getElementById('dup-text').textContent = '通信エラー'; document.getElementById('dup-sub').textContent = r.msg; return; }
   if (r.data?.duplicate) {
     el.className = 'dup-result show ng';
     document.getElementById('dup-icon').textContent = '❌';
@@ -632,12 +512,7 @@ function setFilter(f, btn) {
   btn.classList.add('on');
   loadList();
 }
-
-function debounceSearch() {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => loadList(), 500);
-}
-
+function debounceSearch() { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadList(), 500); }
 async function loadList() {
   const body = document.getElementById('list-body');
   const empty = document.getElementById('list-empty');
@@ -650,7 +525,7 @@ async function loadList() {
   const rows = r.data.rows || [];
   document.getElementById('list-sub').textContent = `全員共通 · ${rows.length}件`;
   if (!rows.length) { empty.textContent = 'データがありません'; empty.style.display = 'block'; return; }
-  const ab = a => `<span class="badge b-${a.toLowerCase()}">Acct ${a}</span>`;
+  const ab = a => a === 'A' ? `<span class="badge b-a">代表者</span>` : a === 'B' ? `<span class="badge b-b">企業</span>` : `<span class="badge" style="background:var(--surface2);color:var(--text3);">未設定</span>`;
   body.innerHTML = rows.map(r =>
     `<div class="list-item">
       <div class="list-main">
@@ -661,7 +536,6 @@ async function loadList() {
   ).join('');
 }
 
-// ── ページ遷移 ──
 function goPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -672,10 +546,14 @@ function goPage(name, btn) {
 
 function getToday() {
   const d = new Date();
-  return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  const hh = String(d.getHours()).padStart(2,'0');
+  const min = String(d.getMinutes()).padStart(2,'0');
+  return `${yyyy}/${mm}/${dd} ${hh}:${min}:00`;
 }
 
-// ── 初期化 ──
 renderNickname();
 fetchSelfInfo();
 if (!nickname) setTimeout(() => openNnSheet(), 700);
