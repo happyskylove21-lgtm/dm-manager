@@ -270,7 +270,24 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
     <div class="page-header"><h2>送信報告</h2><div class="sub">稼働完了後にDiscordへ</div></div>
     <div class="card">
       <div class="card-label">担当者・送信数</div>
-      <div class="field"><label>担当者</label><select id="rep-person"></select></div>
+      <div class="field"><label>担当者</label><select id="rep-person" onchange="loadMemberStats()"></select></div>
+      <div id="member-stats-card" style="display:none; background:var(--surface2); border-radius:var(--r-sm); padding:14px; margin-bottom:12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--text3); letter-spacing:0.07em; text-transform:uppercase; margin-bottom:10px;">本日の実績（自動取得）</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+          <div style="text-align:center; background:var(--surface); border-radius:8px; padding:10px 6px;">
+            <div style="font-size:22px; font-weight:700; font-family:var(--mono); color:var(--accent-a);" id="ms-a">—</div>
+            <div style="font-size:10px; color:var(--text3);">代表者</div>
+          </div>
+          <div style="text-align:center; background:var(--surface); border-radius:8px; padding:10px 6px;">
+            <div style="font-size:22px; font-weight:700; font-family:var(--mono); color:var(--accent-b);" id="ms-b">—</div>
+            <div style="font-size:10px; color:var(--text3);">企業</div>
+          </div>
+          <div style="text-align:center; background:var(--surface); border-radius:8px; padding:10px 6px;">
+            <div style="font-size:22px; font-weight:700; font-family:var(--mono); color:var(--text);" id="ms-total">—</div>
+            <div style="font-size:10px; color:var(--text3);">合計</div>
+          </div>
+        </div>
+      </div>
       <div class="count-row">
         <div class="count-field"><label>代表者アカウント</label><input type="number" id="rep-a" value="0" min="0" max="60" inputmode="numeric"></div>
         <div class="count-sep">+</div>
@@ -630,6 +647,28 @@ async function registerFromCheck() {
   document.getElementById('reg-email').value = '';
   document.getElementById('dup-result').classList.remove('show');
   setTimeout(() => okEl.classList.remove('show'), 3000);
+}
+
+// ── メンバー別日次集計 ──
+async function loadMemberStats() {
+  const person = document.getElementById('rep-person').value;
+  if (!person) return;
+  const card = document.getElementById('member-stats-card');
+  card.style.display = 'block';
+  document.getElementById('ms-a').textContent = '…';
+  document.getElementById('ms-b').textContent = '…';
+  document.getElementById('ms-total').textContent = '…';
+  const r = await callGas({ action: 'memberStats', person, today: getTodayStr() });
+  if (r.ok && r.data) {
+    const d = r.data;
+    document.getElementById('ms-a').textContent = d.a ?? '0';
+    document.getElementById('ms-b').textContent = d.b ?? '0';
+    document.getElementById('ms-total').textContent = (d.a ?? 0) + (d.b ?? 0);
+    // 送信数欄に自動入力
+    document.getElementById('rep-a').value = d.a ?? 0;
+    document.getElementById('rep-b').value = d.b ?? 0;
+    updateRepTotal();
+  }
 }
 
 // ── 報告 ──
