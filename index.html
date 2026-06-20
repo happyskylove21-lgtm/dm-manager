@@ -198,6 +198,30 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <div class="stat s-r"><div class="n" id="s-r">—</div><div class="l">返信あり（累計）</div></div>
       <div class="stat s-ng"><div class="n" id="s-ng">—</div><div class="l">NG（累計）</div></div>
     </div>
+    <div class="card">
+      <div class="card-label">👀 開封率（既読率）— 全体</div>
+      <div class="daily-grid">
+        <div class="daily-card full"><div class="n" id="s-read-rate" style="color:var(--success);">—%</div><div class="l">既読率（累計）</div></div>
+        <div class="daily-card"><div class="n" id="s-read" style="color:var(--success);">—</div><div class="l">既読件数</div></div>
+        <div class="daily-card"><div class="n" id="s-unread" style="color:var(--text3);">—</div><div class="l">未読件数</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">👀 開封率 — 代表者アカウント</div>
+      <div class="daily-grid">
+        <div class="daily-card full"><div class="n" id="s-read-rate-a" style="color:var(--accent-a);">—%</div><div class="l">既読率</div></div>
+        <div class="daily-card"><div class="n" id="s-read-a" style="color:var(--accent-a);">—</div><div class="l">既読件数</div></div>
+        <div class="daily-card"><div class="n" id="s-unread-a" style="color:var(--text3);">—</div><div class="l">未読件数</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">👀 開封率 — 企業アカウント</div>
+      <div class="daily-grid">
+        <div class="daily-card full"><div class="n" id="s-read-rate-b" style="color:var(--accent-b);">—%</div><div class="l">既読率</div></div>
+        <div class="daily-card"><div class="n" id="s-read-b" style="color:var(--accent-b);">—</div><div class="l">既読件数</div></div>
+        <div class="daily-card"><div class="n" id="s-unread-b" style="color:var(--text3);">—</div><div class="l">未読件数</div></div>
+      </div>
+    </div>
   </div>
 
   <!-- テンプレート -->
@@ -327,6 +351,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <button class="chip" onclick="setFilter('DM済',this)">DM済</button>
       <button class="chip" onclick="setFilter('返信あり',this)">返信あり</button>
       <button class="chip" onclick="setFilter('NG',this)">NG</button>
+      <button class="chip" onclick="setFilter('既読',this)">👀既読</button>
+      <button class="chip" onclick="setFilter('未読',this)">未読</button>
     </div>
     <div class="card" style="padding: 0 16px;">
       <div id="list-body"></div>
@@ -365,6 +391,11 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); font
       <button class="status-btn s-dm" onclick="changeStatus('DM済')">📨 DM済</button>
       <button class="status-btn s-rep" onclick="changeStatus('返信あり')">💬 返信あり</button>
       <button class="status-btn s-ng" onclick="changeStatus('NG')">❌ NG</button>
+    </div>
+    <div style="font-size:11px; font-weight:700; color:var(--text3); letter-spacing:0.06em; margin:18px 0 8px;">既読状況</div>
+    <div class="status-btns">
+      <button class="status-btn" style="border-color:var(--success); color:var(--success);" onclick="changeRead(true)">👀 既読</button>
+      <button class="status-btn" style="border-color:var(--text3); color:var(--text2);" onclick="changeRead(false)">⬜ 未読</button>
     </div>
     <button class="btn btn-primary" style="margin-top:12px;" onclick="closeStatusModal()">キャンセル</button>
   </div>
@@ -599,6 +630,27 @@ async function loadStats() {
     document.getElementById('d-b').textContent = d.todayB ?? '0';
     document.getElementById('d-rep').textContent = d.todayReplied ?? '0';
     document.getElementById('d-ng').textContent = d.todayNg ?? '0';
+
+    // 全体の既読率
+    document.getElementById('s-read').textContent = d.read ?? '—';
+    document.getElementById('s-unread').textContent = d.unread ?? '—';
+    const readTotal = (d.read || 0) + (d.unread || 0);
+    const rate = readTotal > 0 ? Math.round((d.read / readTotal) * 100) : 0;
+    document.getElementById('s-read-rate').textContent = readTotal > 0 ? rate + '%' : '—%';
+
+    // 代表者アカウントの既読率
+    document.getElementById('s-read-a').textContent = d.readA ?? '—';
+    document.getElementById('s-unread-a').textContent = d.unreadA ?? '—';
+    const totalA = (d.readA || 0) + (d.unreadA || 0);
+    const rateA = totalA > 0 ? Math.round((d.readA / totalA) * 100) : 0;
+    document.getElementById('s-read-rate-a').textContent = totalA > 0 ? rateA + '%' : '—%';
+
+    // 企業アカウントの既読率
+    document.getElementById('s-read-b').textContent = d.readB ?? '—';
+    document.getElementById('s-unread-b').textContent = d.unreadB ?? '—';
+    const totalB = (d.readB || 0) + (d.unreadB || 0);
+    const rateB = totalB > 0 ? Math.round((d.readB / totalB) * 100) : 0;
+    document.getElementById('s-read-rate-b').textContent = totalB > 0 ? rateB + '%' : '—%';
   }
 }
 
@@ -753,6 +805,19 @@ async function changeStatus(newStatus) {
   currentEditId = null;
 }
 
+async function changeRead(isRead) {
+  if (!currentEditId) return;
+  document.getElementById('status-modal').classList.remove('show');
+  const r = await callGas({ action: 'updateRead', id: currentEditId, read: isRead ? '既読' : '未読' });
+  if (r.ok) {
+    loadList();
+    loadStats();
+  } else {
+    alert('更新失敗: ' + r.msg);
+  }
+  currentEditId = null;
+}
+
 // ── リスト ──
 function setFilter(f, btn) {
   currentFilter = f;
@@ -775,11 +840,12 @@ async function loadList() {
   if (!rows.length) { empty.textContent = 'データがありません'; empty.style.display = 'block'; return; }
   const sb = s => { const m = {'DM済':'b-dm','返信あり':'b-rep','NG':'b-ng'}; return `<span class="badge ${m[s]||''}">${s}</span>`; };
   const ab = a => `<span class="badge b-${a.toLowerCase()}">${a === 'A' ? '代表者' : '企業'}</span>`;
+  const rb = r => r === '既読' ? `<span class="badge" style="background:var(--success-bg);color:var(--success);">👀既読</span>` : `<span class="badge" style="background:var(--surface2);color:var(--text3);">未読</span>`;
   body.innerHTML = rows.map(r =>
     `<div class="list-item">
       <div class="list-main">
         <div class="list-id">@${r.id}</div>
-        <div class="list-meta">${ab(r.acct)} ${sb(r.status)}${r.genre ? ` <span class="list-sub">${r.genre}</span>` : ''}</div>
+        <div class="list-meta">${ab(r.acct)} ${sb(r.status)} ${rb(r.read)}${r.genre ? ` <span class="list-sub">${r.genre}</span>` : ''}</div>
         <div class="list-meta" style="margin-top:3px;"><span class="list-sub">${r.person}</span></div>
         <div class="list-date">${r.date}</div>
       </div>
